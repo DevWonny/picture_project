@@ -1,17 +1,24 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
 const Login = () => {
+  // id state
+  const [id, setId] = useState("");
+
+  // password state
+  const [password, setPassword] = useState("");
+
   return (
     <LoginWrap>
       <BackButton />
       <LoginContainer>
         <h1>Login</h1>
 
-        <CommonInput placeHolderText="ID" />
-        <CommonInput placeHolderText="PW" />
+        <CommonInput placeHolderText="ID" setFunction={setId} />
+        <CommonInput placeHolderText="PW" setFunction={setPassword} />
         <CommonSubmit submitText="Login" />
         <span>Sign Up</span>
       </LoginContainer>

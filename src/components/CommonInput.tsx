@@ -1,11 +1,22 @@
+import { SetStateAction, Dispatch } from "react";
 import styled from "styled-components";
 
 interface inputPlaceholder {
   placeHolderText: string;
+  setFunction?: Dispatch<SetStateAction<string>>;
 }
 
 const CommonInput = (props: inputPlaceholder) => {
-  return <InputContainer placeholder={props.placeHolderText} />;
+  return (
+    <InputContainer
+      placeholder={props.placeHolderText}
+      onChange={(e) => {
+        if (props.setFunction) {
+          props.setFunction(e.target.value);
+        }
+      }}
+    />
+  );
 };
 
 export default CommonInput;
