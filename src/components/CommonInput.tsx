@@ -19,4 +19,5 @@ const InputContainer = styled.input`
   border-radius: 10px;
   font-size: 20px;
   padding-left: 10px;
+  margin-bottom: 40px;
 `;
