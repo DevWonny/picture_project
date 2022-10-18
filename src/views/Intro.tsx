@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Intro = () => {
   return (
     <IntroWrap>
-      <span>test</span>
+      <p>앱 실행시 문구.... 뭐넣지....?</p>
 
       <IntroButton sign={false}>Login</IntroButton>
       <IntroButton sign={true}>Sign Up</IntroButton>
@@ -19,6 +19,12 @@ const IntroWrap = styled.div`
   min-height: 900px;
   background: #8b7c67;
   position: relative;
+  margin: 30px auto;
+  text-align: center;
+  line-height: 900px;
+
+  & p {
+  }
 `;
 
 const IntroButton = styled.div<{ sign: boolean }>`
