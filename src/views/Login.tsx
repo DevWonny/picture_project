@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
 const Login = () => {
+  // navigate
+  const navigate = useNavigate();
+
   // id state
   const [id, setId] = useState("");
 
@@ -31,7 +35,7 @@ const Login = () => {
         <CommonInput placeHolderText="ID" setFunction={setId} />
         <CommonInput placeHolderText="PW" setFunction={setPassword} />
         <CommonSubmit submitText="Login" isState={isSubmit} />
-        <span>Sign Up</span>
+        <span onClick={() => navigate("/signup")}>Sign Up</span>
       </LoginContainer>
     </LoginWrap>
   );
@@ -54,7 +58,6 @@ const LoginContainer = styled.div`
   height: 50%;
   position: absolute;
   left: 10%;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -12,7 +12,9 @@ const Intro = () => {
       <IntroButton sign={false} onClick={() => navigate("/login")}>
         Login
       </IntroButton>
-      <IntroButton sign={true}>Sign Up</IntroButton>
+      <IntroButton sign={true} onClick={() => navigate("/signup")}>
+        Sign Up
+      </IntroButton>
     </IntroWrap>
   );
 };
