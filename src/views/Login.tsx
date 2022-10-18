@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
+import CommonSubmit from "../components/CommonSubmit";
 
 const Login = () => {
   return (
@@ -11,6 +12,8 @@ const Login = () => {
 
         <CommonInput placeHolderText="ID" />
         <CommonInput placeHolderText="PW" />
+        <CommonSubmit submitText="Login" />
+        <span>Sign Up</span>
       </LoginContainer>
     </LoginWrap>
   );
@@ -43,6 +46,11 @@ const LoginContainer = styled.div`
     font-weight: 500;
     text-align: center;
     margin: 0 0 60px 0;
-    color: #fff;
+    color: #e2e2e0;
+  }
+  & span {
+    margin-top: 30px;
+    color: #e2e2e0;
+    cursor: pointer;
   }
 `;

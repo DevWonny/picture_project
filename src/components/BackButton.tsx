@@ -1,9 +1,19 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
 import BackButtonImage from "../assets/BackButton.svg";
 
 const BackButton = () => {
+  // navigate
+  const navigate = useNavigate();
+
+  // navigate를 활용한 go back
+  const onBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <BackButtonWarp>
+    <BackButtonWarp onClick={() => onBack()}>
       <img src={BackButtonImage} alt="Back_Button_image" />
     </BackButtonWarp>
   );
