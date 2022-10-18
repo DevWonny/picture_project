@@ -1,12 +1,17 @@
-import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Intro = () => {
+  // navigate
+  const navigate = useNavigate();
+
   return (
     <IntroWrap>
       <p>앱 실행시 문구.... 뭐넣지....?</p>
 
-      <IntroButton sign={false}>Login</IntroButton>
+      <IntroButton sign={false} onClick={() => navigate("/login")}>
+        Login
+      </IntroButton>
       <IntroButton sign={true}>Sign Up</IntroButton>
     </IntroWrap>
   );
