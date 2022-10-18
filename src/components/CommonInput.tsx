@@ -20,4 +20,5 @@ const InputContainer = styled.input`
   font-size: 20px;
   padding: 0 0 0 10px;
   margin-bottom: 40px;
+  color: #767971;
 `;
