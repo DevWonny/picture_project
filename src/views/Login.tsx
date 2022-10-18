@@ -11,6 +11,17 @@ const Login = () => {
   // password state
   const [password, setPassword] = useState("");
 
+  // login submit button activate
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  useEffect(() => {
+    if (!!id && !!password) {
+      setIsSubmit(true);
+    } else {
+      setIsSubmit(false);
+    }
+  }, [id, password]);
+
   return (
     <LoginWrap>
       <BackButton />
@@ -19,7 +30,7 @@ const Login = () => {
 
         <CommonInput placeHolderText="ID" setFunction={setId} />
         <CommonInput placeHolderText="PW" setFunction={setPassword} />
-        <CommonSubmit submitText="Login" />
+        <CommonSubmit submitText="Login" isState={isSubmit} />
         <span>Sign Up</span>
       </LoginContainer>
     </LoginWrap>
