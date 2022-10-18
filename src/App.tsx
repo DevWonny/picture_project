@@ -14,7 +14,7 @@ function App() {
       <Route path="/" element={<Intro />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/loading" element={<Loading />} />
+      <Route path="/loading" element={<Loading loadingText="test" />} />
     </Routes>
   );
 }
