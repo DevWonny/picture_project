@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import DeleteIcon from "../assets/DeleteIcon.svg";
+
 import BackButton from "../components/BackButton";
 
 const Detail = () => {
@@ -7,6 +9,7 @@ const Detail = () => {
   const location = useLocation();
   return (
     <DetailWrap>
+      {/* Header */}
       <DetailHeader>
         <BackButton parameter={location.pathname} />
         <p>
@@ -15,6 +18,21 @@ const Detail = () => {
           <span>게시물</span>
         </p>
       </DetailHeader>
+
+      {/* Detail Contents */}
+      <DetailContainer>
+        <DetailContainerHeader>
+          <DetailProfileImage></DetailProfileImage>
+          <DetailDeleteButton>
+            <img src={DeleteIcon} alt="delete_icon" />
+          </DetailDeleteButton>
+        </DetailContainerHeader>
+        {/* 이미지 영역 */}
+        <DetailImageContainer></DetailImageContainer>
+
+        {/* text 영역 */}
+        <DetailTextContainer></DetailTextContainer>
+      </DetailContainer>
     </DetailWrap>
   );
 };
@@ -54,4 +72,56 @@ const DetailHeader = styled.div`
       font-weight: 900;
     }
   }
+`;
+
+const DetailContainer = styled.div`
+  width: 100%;
+  height: calc(100vh - 70px);
+  position: relative;
+  border-top: 2px solid #cabfae;
+`;
+
+const DetailContainerHeader = styled.div`
+  width: 100%;
+  height: 70px;
+  position: relative;
+`;
+const DetailProfileImage = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #000;
+  position: relative;
+  left: 20px;
+  right: 0;
+  bottom: 0;
+  top: 10px;
+`;
+
+const DetailDeleteButton = styled.div`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const DetailImageContainer = styled.div`
+  width: 100%;
+  height: 70%;
+  background: #e2e2e0;
+`;
+
+const DetailTextContainer = styled.div`
+  width: 100%;
+  height: 15%;
+  background-color: #e2e2e0;
+  position: absolute;
+  bottom: 0;
 `;
