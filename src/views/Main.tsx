@@ -146,13 +146,12 @@ const LogoutButton = styled.div`
 
 const ProfileContainer = styled.div`
   width: 100%;
-  height: 280px;
+  height: 250px;
   position: relative;
   margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: rebeccapurple;
   border-bottom: 2px solid #cabfae;
 `;
 
