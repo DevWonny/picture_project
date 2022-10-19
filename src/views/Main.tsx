@@ -2,6 +2,10 @@ import styled from "styled-components";
 import MultipleImage from "../assets/MultipleImage.svg";
 import AddImage from "../assets/AddImage.svg";
 import Logout from "../assets/Logout.svg";
+
+import ModalPortal from "../components/ModalPortal";
+import ProfileEdit from "../components/ProfileEdit";
+import { useEffect, useState } from "react";
 interface Profile {
   isId?: boolean;
   isIntroduce?: boolean;
@@ -9,6 +13,8 @@ interface Profile {
 }
 
 const Main = () => {
+  const [isModal, setIsModal] = useState(false);
+
   return (
     <MainWrap>
       {/* 추후 변경 필요! */}
@@ -23,7 +29,14 @@ const Main = () => {
           <ProfileText isId={true}>ID</ProfileText>
           <ProfileText>Name</ProfileText>
           <ProfileText isIntroduce={true}>Introduce</ProfileText>
-          <ProfileText isEdit={true}>프로필 편집</ProfileText>
+          <ProfileText
+            isEdit={true}
+            onClick={() => {
+              setIsModal(true);
+            }}
+          >
+            프로필 편집
+          </ProfileText>
         </ProfileContent>
       </ProfileContainer>
       {/* image 영역 */}
@@ -80,6 +93,12 @@ const Main = () => {
           <img src={AddImage} alt="add_image" />
         </AddImageDiv>
       </AddImageContainer>
+
+      {isModal && (
+        <ModalPortal>
+          <ProfileEdit isModal={isModal} setIsModal={setIsModal} />
+        </ModalPortal>
+      )}
     </MainWrap>
   );
 };
