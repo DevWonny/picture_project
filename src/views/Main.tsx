@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MultipleImage from "../assets/MultipleImage.svg";
 import AddImage from "../assets/AddImage.svg";
-
+import Logout from "../assets/Logout.svg";
 interface Profile {
   isId?: boolean;
   isIntroduce?: boolean;
@@ -13,6 +13,9 @@ const Main = () => {
     <MainWrap>
       {/* 추후 변경 필요! */}
       <h1>Project Name</h1>
+      <LogoutButton>
+        <img src={Logout} alt="logout_button" />
+      </LogoutButton>
       {/* profile 영역 */}
       <ProfileContainer>
         <ProfileImage></ProfileImage>
@@ -108,14 +111,29 @@ const MainWrap = styled.div`
   }
 `;
 
+const LogoutButton = styled.div`
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 const ProfileContainer = styled.div`
   width: 100%;
-  height: 250px;
+  height: 280px;
   position: relative;
   margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  background: rebeccapurple;
   border-bottom: 2px solid #cabfae;
 `;
 
