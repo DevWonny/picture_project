@@ -9,6 +9,11 @@ const Detail = () => {
     <DetailWrap>
       <DetailHeader>
         <BackButton parameter={location.pathname} />
+        <p>
+          ID
+          <br />
+          <span>게시물</span>
+        </p>
       </DetailHeader>
     </DetailWrap>
   );
@@ -34,6 +39,19 @@ const DetailWrap = styled.div`
 const DetailHeader = styled.div`
   width: 100%;
   height: 70px;
-  background: red;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & p {
+    margin: 0;
+    font-size: 20px;
+    color: #e2e2e0;
+    text-align: center;
+
+    & span {
+      font-weight: 900;
+    }
+  }
 `;
