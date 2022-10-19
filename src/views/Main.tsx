@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import MultipleImage from "../assets/MultipleImage.svg";
+import AddImage from "../assets/AddImage.svg";
 
 interface Profile {
   isId?: boolean;
@@ -11,7 +13,6 @@ const Main = () => {
     <MainWrap>
       {/* 추후 변경 필요! */}
       <h1>Project Name</h1>
-
       {/* profile 영역 */}
       <ProfileContainer>
         <ProfileImage></ProfileImage>
@@ -22,11 +23,15 @@ const Main = () => {
           <ProfileText isEdit={true}>프로필 편집</ProfileText>
         </ProfileContent>
       </ProfileContainer>
-
       {/* image 영역 */}
       <ImageWrap>
         <ImageContainer>
-          <ImageDiv>1</ImageDiv>
+          <ImageDiv>
+            <MultiImage>
+              <img src={MultipleImage} alt="Multi_image" />
+            </MultiImage>
+            1
+          </ImageDiv>
           <ImageDiv>2</ImageDiv>
           <ImageDiv>3</ImageDiv>
         </ImageContainer>
@@ -36,7 +41,42 @@ const Main = () => {
           <ImageDiv>5</ImageDiv>
           <ImageDiv>6</ImageDiv>
         </ImageContainer>
+
+        <ImageContainer>
+          <ImageDiv>7</ImageDiv>
+          <ImageDiv>8</ImageDiv>
+          <ImageDiv>9</ImageDiv>
+        </ImageContainer>
+
+        <ImageContainer>
+          <ImageDiv>
+            <MultiImage>
+              <img src={MultipleImage} alt="Multi_image" />
+            </MultiImage>
+            1
+          </ImageDiv>
+          <ImageDiv>2</ImageDiv>
+          <ImageDiv>3</ImageDiv>
+        </ImageContainer>
+
+        <ImageContainer>
+          <ImageDiv>4</ImageDiv>
+          <ImageDiv>5</ImageDiv>
+          <ImageDiv>6</ImageDiv>
+        </ImageContainer>
+
+        <ImageContainer>
+          <ImageDiv>7</ImageDiv>
+          <ImageDiv>8</ImageDiv>
+          <ImageDiv>9</ImageDiv>
+        </ImageContainer>
       </ImageWrap>
+      {/* image add button */}
+      <AddImageContainer>
+        <AddImageDiv>
+          <img src={AddImage} alt="add_image" />
+        </AddImageDiv>
+      </AddImageContainer>
     </MainWrap>
   );
 };
@@ -126,4 +166,42 @@ const ImageDiv = styled.div`
   width: 133px;
   height: 100%;
   background: #e2e2e0;
+  position: relative;
+`;
+
+const MultiImage = styled.div`
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const AddImageContainer = styled.div`
+  width: 100%;
+  height: 70px;
+  background: #e2e2e0;
+  margin-top: 65px;
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const AddImageDiv = styled.div`
+  width: 40px;
+  height: 40px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 `;
