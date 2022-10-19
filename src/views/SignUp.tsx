@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
@@ -18,18 +18,30 @@ const SignUp = () => {
   // sign up state
   const [isSignUp, setIsSignUp] = useState(false);
 
+  // sign up button background 변경
+  useEffect(() => {
+    if (!!id && !!password && !!passwordCheck && !!name && !!introduce) {
+      setIsSignUp(true);
+    } else {
+      setIsSignUp(false);
+    }
+  }, [id, password, passwordCheck, name, introduce]);
+
   return (
     <SignUpWrap>
       <BackButton />
       <SignUpContainer>
         <h1>Sign Up</h1>
 
-        <CommonInput placeHolderText="ID" />
-        <CommonInput placeHolderText="PW" />
-        <CommonInput placeHolderText="PW Check" />
-        <CommonInput placeHolderText="Name" />
-        <CommonInput placeHolderText="Introduce" />
-        <CommonSubmit submitText="Sign Up" />
+        <CommonInput placeHolderText="ID" setFunction={setId} />
+        <CommonInput placeHolderText="PW" setFunction={setPassword} />
+        <CommonInput
+          placeHolderText="PW Check"
+          setFunction={setPasswordCheck}
+        />
+        <CommonInput placeHolderText="Name" setFunction={setName} />
+        <CommonInput placeHolderText="Introduce" setFunction={setIntroduce} />
+        <CommonSubmit submitText="Sign Up" isState={isSignUp} />
       </SignUpContainer>
     </SignUpWrap>
   );
