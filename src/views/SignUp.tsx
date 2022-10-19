@@ -1,9 +1,23 @@
+import { useState } from "react";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
 const SignUp = () => {
+  // id state
+  const [id, setId] = useState("");
+  // password state
+  const [password, setPassword] = useState("");
+  // password check state
+  const [passwordCheck, setPasswordCheck] = useState("");
+  // name state
+  const [name, setName] = useState("");
+  // introduce state
+  const [introduce, setIntroduce] = useState("");
+  // sign up state
+  const [isSignUp, setIsSignUp] = useState(false);
+
   return (
     <SignUpWrap>
       <BackButton />
@@ -27,7 +41,7 @@ const SignUpWrap = styled.div`
   width: 450px;
   height: 900px;
   position: relative;
-  margin: 30px auto;
+  margin: 0 auto;
   background: #8b7c67;
   display: flex;
   align-items: center;

@@ -48,7 +48,7 @@ const LoginWrap = styled.div`
   height: 900px;
   background: #8b7c67;
   position: relative;
-  margin: 30px auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
 `;

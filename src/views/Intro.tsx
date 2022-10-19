@@ -26,9 +26,13 @@ const IntroWrap = styled.div`
   min-height: 900px;
   background: #8b7c67;
   position: relative;
-  margin: 30px auto;
+  margin: 0 auto;
   text-align: center;
   line-height: 900px;
+
+  & p {
+    margin: 0;
+  }
 `;
 
 const IntroButton = styled.div<{ sign: boolean }>`
