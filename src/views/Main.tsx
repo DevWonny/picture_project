@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MultipleImage from "../assets/MultipleImage.svg";
 import AddImage from "../assets/AddImage.svg";
@@ -5,7 +7,7 @@ import Logout from "../assets/Logout.svg";
 
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
-import { useEffect, useState } from "react";
+
 interface Profile {
   isId?: boolean;
   isIntroduce?: boolean;
@@ -13,6 +15,8 @@ interface Profile {
 }
 
 const Main = () => {
+  // navigate
+  const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
 
   return (
@@ -88,7 +92,11 @@ const Main = () => {
         </ImageContainer>
       </ImageWrap>
       {/* image add button */}
-      <AddImageContainer>
+      <AddImageContainer
+        onClick={() => {
+          navigate("/upload");
+        }}
+      >
         <AddImageDiv>
           <img src={AddImage} alt="add_image" />
         </AddImageDiv>
