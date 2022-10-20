@@ -23,7 +23,7 @@ export default Intro;
 
 const IntroWrap = styled.div`
   max-width: 450px;
-  min-height: 900px;
+  height: 100vh;
   background: #8b7c67;
   position: relative;
   margin: 0 auto;

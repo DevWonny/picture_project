@@ -51,7 +51,7 @@ export default SignUp;
 
 const SignUpWrap = styled.div`
   width: 450px;
-  height: 900px;
+  height: 100vh;
   position: relative;
   margin: 0 auto;
   background: #8b7c67;
