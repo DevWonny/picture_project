@@ -1,17 +1,19 @@
 import styled from "styled-components";
-import { LoginAPI } from "../api/User";
+import { LoginAPI, RegisterAPI } from "../api/User";
 
 interface submitType {
   submitText: string;
   isState?: boolean;
   id?: string;
   password?: string;
+  name?: string;
+  introduce?: string;
 }
 
 const CommonSubmit = (props: submitType) => {
   // login api 호출
   const loginClick = async () => {
-    if (!!props.id && !!props.password && props.submitText === "Login") {
+    if (!!props.id && !!props.password) {
       const res = await LoginAPI({
         userId: props.id,
         password: props.password,
@@ -20,11 +22,30 @@ const CommonSubmit = (props: submitType) => {
       console.log("login", res);
     }
   };
+
+  // register api 호출
+  const registerClick = async () => {
+    console.log(props);
+    if (!!props.id && !!props.password && !!props.name && !!props.introduce) {
+      const res = await RegisterAPI({
+        userId: props.id,
+        password: props.password,
+        name: props.name,
+        introduce: props.introduce,
+      });
+
+      console.log("register", res);
+    }
+  };
   return (
     <CommonSubmitContainer
       isSubmit={!!props.isState}
       onClick={() => {
-        loginClick();
+        if (props.submitText === "Login") {
+          loginClick();
+        } else if (props.submitText === "Sign Up") {
+          registerClick();
+        }
       }}
     >
       {props.submitText}

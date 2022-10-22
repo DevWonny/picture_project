@@ -41,7 +41,14 @@ const SignUp = () => {
         />
         <CommonInput placeHolderText="Name" setFunction={setName} />
         <CommonInput placeHolderText="Introduce" setFunction={setIntroduce} />
-        <CommonSubmit submitText="Sign Up" isState={isSignUp} />
+        <CommonSubmit
+          submitText="Sign Up"
+          isState={isSignUp}
+          id={id}
+          password={password}
+          name={name}
+          introduce={introduce}
+        />
       </SignUpContainer>
     </SignUpWrap>
   );
