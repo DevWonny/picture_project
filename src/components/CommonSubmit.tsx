@@ -1,13 +1,32 @@
 import styled from "styled-components";
+import { LoginAPI } from "../api/User";
 
 interface submitType {
   submitText: string;
   isState?: boolean;
+  id?: string;
+  password?: string;
 }
 
 const CommonSubmit = (props: submitType) => {
+  // login api 호출
+  const loginClick = async () => {
+    if (!!props.id && !!props.password && props.submitText === "Login") {
+      const res = await LoginAPI({
+        userId: props.id,
+        password: props.password,
+      });
+
+      console.log("login", res);
+    }
+  };
   return (
-    <CommonSubmitContainer isSubmit={!!props.isState}>
+    <CommonSubmitContainer
+      isSubmit={!!props.isState}
+      onClick={() => {
+        loginClick();
+      }}
+    >
       {props.submitText}
     </CommonSubmitContainer>
   );

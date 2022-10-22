@@ -34,7 +34,12 @@ const Login = () => {
 
         <CommonInput placeHolderText="ID" setFunction={setId} />
         <CommonInput placeHolderText="PW" setFunction={setPassword} />
-        <CommonSubmit submitText="Login" isState={isSubmit} />
+        <CommonSubmit
+          submitText="Login"
+          isState={isSubmit}
+          id={id}
+          password={password}
+        />
         <span onClick={() => navigate("/signup")}>Sign Up</span>
       </LoginContainer>
     </LoginWrap>
