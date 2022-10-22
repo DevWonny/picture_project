@@ -8,6 +8,8 @@ import Logout from "../assets/Logout.svg";
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
 
+import { UserFetch } from "../api/User";
+
 interface Profile {
   isId?: boolean;
   isIntroduce?: boolean;
@@ -18,6 +20,29 @@ const Main = () => {
   // navigate
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
+  // id
+  const [id, setId] = useState("");
+  // name
+  const [name, setName] = useState("");
+  //introduce
+  const [introduce, setIntroduce] = useState("");
+
+  // user api 호출
+  const userFetch = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    if (!!sessionId) {
+      const res = await UserFetch({ sessionId: sessionId });
+      if (res) {
+        setId(res.data.id);
+        setName(res.data.name);
+      }
+    }
+  };
+
+  useEffect(() => {
+    userFetch();
+  }, []);
 
   return (
     <MainWrap>
@@ -30,8 +55,8 @@ const Main = () => {
       <ProfileContainer>
         <ProfileImage></ProfileImage>
         <ProfileContent>
-          <ProfileText isId={true}>ID</ProfileText>
-          <ProfileText>Name</ProfileText>
+          <ProfileText isId={true}>{id}</ProfileText>
+          <ProfileText>{name}</ProfileText>
           <ProfileText isIntroduce={true}>Introduce</ProfileText>
           <ProfileText
             isEdit={true}

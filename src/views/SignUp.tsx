@@ -46,6 +46,7 @@ const SignUp = () => {
           isState={isSignUp}
           id={id}
           password={password}
+          passwordCheck={passwordCheck}
           name={name}
           introduce={introduce}
         />
