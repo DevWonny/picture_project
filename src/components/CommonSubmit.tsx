@@ -19,7 +19,10 @@ const CommonSubmit = (props: submitType) => {
         password: props.password,
       });
 
-      console.log("login", res);
+      if (res) {
+        console.log("login", res);
+        localStorage.setItem("sessionId", res.data.sessionId);
+      }
     }
   };
 
@@ -34,7 +37,10 @@ const CommonSubmit = (props: submitType) => {
         introduce: props.introduce,
       });
 
-      console.log("register", res);
+      if (res) {
+        console.log("register", res);
+        localStorage.setItem("sessionId", res.data.sessionId);
+      }
     }
   };
   return (
