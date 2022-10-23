@@ -1,9 +1,11 @@
-import React, { SetStateAction, Dispatch } from "react";
+import React, { SetStateAction, Dispatch, useState, useEffect } from "react";
 import styled from "styled-components";
 import CloseIcon from "../assets/CloseIcon.svg";
 
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
+
+import { UserEdit } from "../api/User";
 
 interface props {
   isModal: boolean;
@@ -19,6 +21,30 @@ interface props {
 }
 
 const ProfileEdit = (props: props) => {
+  // edit Id
+  const [editId, setEditId] = useState("");
+
+  // edit name
+  const [editName, setEditName] = useState("");
+
+  useEffect(() => {
+    if (!!props.id && !!props.name) {
+      setEditId(props.id);
+      setEditName(props.name);
+    }
+  }, [props]);
+
+  const userEditApi = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    if (!!sessionId) {
+      const res = await UserEdit({ sessionId: sessionId });
+      if (res) {
+        console.log(res);
+      }
+    }
+  };
+
   return (
     <EditWrap>
       <EditCloseButton onClick={() => props.setIsModal(false)}>
@@ -26,10 +52,16 @@ const ProfileEdit = (props: props) => {
       </EditCloseButton>
       <h1>Profile Edit</h1>
       <EditProfileImage></EditProfileImage>
-      <CommonInput placeHolderText="ID" value={props.id} />
-      <CommonInput placeHolderText="PW" value={props.password} />
-      <CommonInput placeHolderText="Name" value={props.name} />
-      <CommonInput placeHolderText="Introduce" value={props.introduce} />
+      <EditInput placeholder="ID" value={editId} />
+      <EditInput placeholder="PW" />
+      <EditInput
+        placeholder="Name"
+        value={editName}
+        onChange={(e) => {
+          setEditName(e.target.value);
+        }}
+      />
+      <EditInput placeholder="Introduce" />
       <CommonSubmit submitText="Change" />
     </EditWrap>
   );
@@ -78,4 +110,17 @@ const EditProfileImage = styled.div`
   background: #000;
   margin-top: 30px;
   margin-bottom: 20px;
+`;
+
+const EditInput = styled.input`
+  width: 290px;
+  height: 60px;
+  background: #cabfae;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 0 0 0 10px;
+  margin-bottom: 40px;
+  color: #767971;
 `;
