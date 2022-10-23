@@ -85,3 +85,20 @@ export const UserFetch = async (props: UserData) => {
     console.log(err);
   }
 };
+
+// user information Edit
+export const UserEdit = async (props: UserData) => {
+  const userData = {
+    sessionid: props.sessionId,
+  };
+
+  try {
+    const res = await axios.post(`http://localhost:5000/user/edit`, userData);
+
+    if (res) {
+      return res;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
