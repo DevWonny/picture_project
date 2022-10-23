@@ -8,7 +8,7 @@ import Logout from "../assets/Logout.svg";
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
 
-import { UserFetch } from "../api/User";
+import { UserFetch, LogoutAPI } from "../api/User";
 
 interface Profile {
   isId?: boolean;
@@ -25,6 +25,7 @@ const Main = () => {
   // name
   const [name, setName] = useState("");
   //introduce
+  // 추후 introduce 구현
   const [introduce, setIntroduce] = useState("");
 
   // user api 호출
@@ -40,6 +41,22 @@ const Main = () => {
     }
   };
 
+  // logout api 호출
+  const logoutApi = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    console.log(sessionId);
+    if (!!sessionId) {
+      const res = await LogoutAPI({ sessionId: sessionId });
+      if (res) {
+        alert("logOut!");
+        // logout 과 동시에 localStorage에서 session Id 제거
+        localStorage.removeItem("sessionId");
+        navigate("/");
+      }
+    }
+  };
+
   useEffect(() => {
     userFetch();
   }, []);
@@ -48,7 +65,11 @@ const Main = () => {
     <MainWrap>
       {/* 추후 변경 필요! */}
       <h1>Project Name</h1>
-      <LogoutButton>
+      <LogoutButton
+        onClick={() => {
+          logoutApi();
+        }}
+      >
         <img src={Logout} alt="logout_button" />
       </LogoutButton>
       {/* profile 영역 */}

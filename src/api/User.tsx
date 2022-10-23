@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 
 interface UserData {
   userId?: string;
@@ -48,6 +48,25 @@ export const LoginAPI = async (props: UserData) => {
   } catch (err: any) {
     console.log(err);
     alert(err.response.data.message);
+  }
+};
+
+// logout api
+export const LogoutAPI = async (props: UserData) => {
+  try {
+    const res = await axios.post(
+      `http://localhost:5000/user/logout`,
+      {},
+      {
+        headers: { sessionid: props.sessionId },
+      }
+    );
+
+    if (res) {
+      return res;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
