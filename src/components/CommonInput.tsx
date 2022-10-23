@@ -4,12 +4,14 @@ import styled from "styled-components";
 interface inputPlaceholder {
   placeHolderText: string;
   setFunction?: Dispatch<SetStateAction<string>>;
+  value?: string;
 }
 
 const CommonInput = (props: inputPlaceholder) => {
   return (
     <InputContainer
       placeholder={props.placeHolderText}
+      value={props.value}
       onChange={(e) => {
         if (props.setFunction) {
           props.setFunction(e.target.value);

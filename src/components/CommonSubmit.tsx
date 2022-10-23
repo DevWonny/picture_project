@@ -111,7 +111,6 @@ const CommonSubmit = (props: submitType) => {
       });
 
       if (res) {
-        console.log("login", res);
         localStorage.setItem("sessionId", res.data.sessionId);
         navigate("/main");
       }
@@ -133,7 +132,6 @@ const CommonSubmit = (props: submitType) => {
       });
 
       if (res) {
-        console.log("register", res);
         localStorage.setItem("sessionId", res.data.sessionId);
         navigate("/main");
       }

@@ -8,6 +8,14 @@ import CommonSubmit from "../components/CommonSubmit";
 interface props {
   isModal: boolean;
   setIsModal: Dispatch<SetStateAction<boolean>>;
+  id?: string;
+  password?: string;
+  name?: string;
+  introduce?: string;
+  setId?: Dispatch<SetStateAction<string>>;
+  setPassword?: Dispatch<SetStateAction<string>>;
+  setName?: Dispatch<SetStateAction<string>>;
+  setIntroduce?: Dispatch<SetStateAction<string>>;
 }
 
 const ProfileEdit = (props: props) => {
@@ -18,10 +26,10 @@ const ProfileEdit = (props: props) => {
       </EditCloseButton>
       <h1>Profile Edit</h1>
       <EditProfileImage></EditProfileImage>
-      <CommonInput placeHolderText="ID" />
-      <CommonInput placeHolderText="PW" />
-      <CommonInput placeHolderText="Name" />
-      <CommonInput placeHolderText="Introduce" />
+      <CommonInput placeHolderText="ID" value={props.id} />
+      <CommonInput placeHolderText="PW" value={props.password} />
+      <CommonInput placeHolderText="Name" value={props.name} />
+      <CommonInput placeHolderText="Introduce" value={props.introduce} />
       <CommonSubmit submitText="Change" />
     </EditWrap>
   );

@@ -44,8 +44,6 @@ const Main = () => {
   // logout api 호출
   const logoutApi = async () => {
     const sessionId = localStorage.getItem("sessionId");
-
-    console.log(sessionId);
     if (!!sessionId) {
       const res = await LogoutAPI({ sessionId: sessionId });
       if (res) {
@@ -150,7 +148,14 @@ const Main = () => {
 
       {isModal && (
         <ModalPortal>
-          <ProfileEdit isModal={isModal} setIsModal={setIsModal} />
+          <ProfileEdit
+            isModal={isModal}
+            setIsModal={setIsModal}
+            id={id}
+            name={name}
+            setId={setId}
+            setName={setName}
+          />
         </ModalPortal>
       )}
     </MainWrap>
