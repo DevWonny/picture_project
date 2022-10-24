@@ -41,6 +41,11 @@ const Main = () => {
     }
   };
 
+  // 모달이 꺼지면 user 정보를 한번 더 호출
+  useEffect(() => {
+    userFetch();
+  }, [isModal]);
+
   // logout api 호출
   const logoutApi = async () => {
     const sessionId = localStorage.getItem("sessionId");

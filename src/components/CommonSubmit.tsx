@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LoginAPI, RegisterAPI } from "../api/User";
 
+import { UserEdit } from "../api/User";
+
 interface submitType {
   submitText: string;
   isState?: boolean;
@@ -137,6 +139,19 @@ const CommonSubmit = (props: submitType) => {
       }
     }
   };
+
+  // profile Edit api
+  const userEditClick = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    if (!!sessionId) {
+      const res = await UserEdit({ sessionId: sessionId, name: props.name });
+      if (res) {
+        console.log(res);
+      }
+    }
+  };
+
   return (
     <CommonSubmitContainer
       isSubmit={!!props.isState}
@@ -145,6 +160,8 @@ const CommonSubmit = (props: submitType) => {
           loginClick();
         } else if (props.submitText === "Sign Up") {
           registerClick();
+        } else if (props.submitText === "Change") {
+          userEditClick();
         }
       }}
     >

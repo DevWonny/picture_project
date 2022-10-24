@@ -90,6 +90,7 @@ export const UserFetch = async (props: UserData) => {
 export const UserEdit = async (props: UserData) => {
   const userData = {
     sessionid: props.sessionId,
+    name: props.name,
   };
 
   try {

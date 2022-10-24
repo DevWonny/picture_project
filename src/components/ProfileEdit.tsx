@@ -5,8 +5,6 @@ import CloseIcon from "../assets/CloseIcon.svg";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
-import { UserEdit } from "../api/User";
-
 interface props {
   isModal: boolean;
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +25,9 @@ const ProfileEdit = (props: props) => {
   // edit name
   const [editName, setEditName] = useState("");
 
+  // edit submit state
+  const [isEdit, setIsEdit] = useState(false);
+
   useEffect(() => {
     if (!!props.id && !!props.name) {
       setEditId(props.id);
@@ -34,16 +35,13 @@ const ProfileEdit = (props: props) => {
     }
   }, [props]);
 
-  const userEditApi = async () => {
-    const sessionId = localStorage.getItem("sessionId");
-
-    if (!!sessionId) {
-      const res = await UserEdit({ sessionId: sessionId });
-      if (res) {
-        console.log(res);
-      }
+  useEffect(() => {
+    if (props.id !== editId || props.name !== editName) {
+      setIsEdit(true);
+    } else {
+      setIsEdit(false);
     }
-  };
+  }, [editId, editName, props.id, props.name]);
 
   return (
     <EditWrap>
@@ -62,7 +60,7 @@ const ProfileEdit = (props: props) => {
         }}
       />
       <EditInput placeholder="Introduce" />
-      <CommonSubmit submitText="Change" />
+      <CommonSubmit submitText="Change" isState={isEdit} name={editName} />
     </EditWrap>
   );
 };
