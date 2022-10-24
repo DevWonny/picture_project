@@ -1,3 +1,4 @@
+import { SetStateAction, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LoginAPI, RegisterAPI } from "../api/User";
@@ -12,6 +13,7 @@ interface submitType {
   passwordCheck?: string;
   name?: string;
   introduce?: string;
+  setIsModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommonSubmit = (props: submitType) => {
@@ -63,11 +65,13 @@ const CommonSubmit = (props: submitType) => {
   // name validation - 영어 / 한글
   const nameValidation = () => {
     // 모바일 경우도 확인 해야함! 천지인 키패드!!
-    const nameRegularExpression = /^[a-zA-Zㄱ-ㅎ가-힣]$/;
-    if (!!props.name && !nameRegularExpression.test(props.name)) {
-      alert("이름을 확인해주세요. 이름은 영문, 한글만 입력해주세요.");
-      return false;
-    }
+    // const nameRegularExpression = /^[a-zA-Zㄱ-ㅎ가-힣]$/;
+    // if (props.name) console.log(nameRegularExpression.test(props.name));
+
+    // if (!!props.name && !nameRegularExpression.test(props.name)) {
+    //   alert("이름을 확인해주세요. 이름은 영문, 한글만 입력해주세요.");
+    //   return false;
+    // }
 
     return true;
   };
@@ -145,8 +149,13 @@ const CommonSubmit = (props: submitType) => {
     const sessionId = localStorage.getItem("sessionId");
 
     if (!!sessionId) {
-      const res = await UserEdit({ sessionId: sessionId, name: props.name });
+      const res = await UserEdit({
+        sessionId: sessionId,
+        name: props.name,
+        introduce: props.introduce,
+      });
       if (res) {
+        if (props.setIsModal) props.setIsModal(false);
         console.log(res);
       }
     }

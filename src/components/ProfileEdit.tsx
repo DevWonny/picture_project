@@ -12,10 +12,6 @@ interface props {
   password?: string;
   name?: string;
   introduce?: string;
-  setId?: Dispatch<SetStateAction<string>>;
-  setPassword?: Dispatch<SetStateAction<string>>;
-  setName?: Dispatch<SetStateAction<string>>;
-  setIntroduce?: Dispatch<SetStateAction<string>>;
 }
 
 const ProfileEdit = (props: props) => {
@@ -24,6 +20,9 @@ const ProfileEdit = (props: props) => {
 
   // edit name
   const [editName, setEditName] = useState("");
+
+  // edit introduce
+  const [editIntroduce, setEditIntroduce] = useState("");
 
   // edit submit state
   const [isEdit, setIsEdit] = useState(false);
@@ -36,12 +35,16 @@ const ProfileEdit = (props: props) => {
   }, [props]);
 
   useEffect(() => {
-    if (props.id !== editId || props.name !== editName) {
+    if (
+      props.id !== editId ||
+      props.name !== editName ||
+      props.introduce !== editIntroduce
+    ) {
       setIsEdit(true);
     } else {
       setIsEdit(false);
     }
-  }, [editId, editName, props.id, props.name]);
+  }, [editId, editIntroduce, editName, props.id, props.introduce, props.name]);
 
   return (
     <EditWrap>
@@ -50,7 +53,11 @@ const ProfileEdit = (props: props) => {
       </EditCloseButton>
       <h1>Profile Edit</h1>
       <EditProfileImage></EditProfileImage>
-      <EditInput placeholder="ID" value={editId} />
+      <EditInput
+        placeholder="ID"
+        value={editId}
+        onChange={(e) => setEditId(e.target.value)}
+      />
       <EditInput placeholder="PW" />
       <EditInput
         placeholder="Name"
@@ -59,8 +66,18 @@ const ProfileEdit = (props: props) => {
           setEditName(e.target.value);
         }}
       />
-      <EditInput placeholder="Introduce" />
-      <CommonSubmit submitText="Change" isState={isEdit} name={editName} />
+      <EditInput
+        placeholder="Introduce"
+        value={editIntroduce}
+        onChange={(e) => setEditIntroduce(e.target.value)}
+      />
+      <CommonSubmit
+        submitText="Change"
+        isState={isEdit}
+        name={editName}
+        introduce={editIntroduce}
+        setIsModal={props.setIsModal}
+      />
     </EditWrap>
   );
 };

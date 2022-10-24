@@ -72,11 +72,12 @@ export const LogoutAPI = async (props: UserData) => {
 
 // user information fetch
 export const UserFetch = async (props: UserData) => {
-  const userData = {
-    sessionid: props.sessionId,
-  };
   try {
-    const res = await axios.post(`http://localhost:5000/user/user`, userData);
+    const res = await axios.post(
+      `http://localhost:5000/user/user`,
+      {},
+      { headers: { sessionid: props.sessionId } }
+    );
 
     if (res) {
       return res;
@@ -91,6 +92,7 @@ export const UserEdit = async (props: UserData) => {
   const userData = {
     sessionid: props.sessionId,
     name: props.name,
+    introduce: props.introduce,
   };
 
   try {

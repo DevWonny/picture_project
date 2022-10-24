@@ -31,20 +31,15 @@ const Main = () => {
   // user api 호출
   const userFetch = async () => {
     const sessionId = localStorage.getItem("sessionId");
-
     if (!!sessionId) {
       const res = await UserFetch({ sessionId: sessionId });
       if (res) {
         setId(res.data.id);
         setName(res.data.name);
+        setIntroduce(res.data.introduce);
       }
     }
   };
-
-  // 모달이 꺼지면 user 정보를 한번 더 호출
-  useEffect(() => {
-    userFetch();
-  }, [isModal]);
 
   // logout api 호출
   const logoutApi = async () => {
@@ -62,7 +57,7 @@ const Main = () => {
 
   useEffect(() => {
     userFetch();
-  }, []);
+  }, [isModal]);
 
   return (
     <MainWrap>
@@ -81,7 +76,7 @@ const Main = () => {
         <ProfileContent>
           <ProfileText isId={true}>{id}</ProfileText>
           <ProfileText>{name}</ProfileText>
-          <ProfileText isIntroduce={true}>Introduce</ProfileText>
+          <ProfileText isIntroduce={true}>{introduce}</ProfileText>
           <ProfileText
             isEdit={true}
             onClick={() => {
@@ -158,8 +153,7 @@ const Main = () => {
             setIsModal={setIsModal}
             id={id}
             name={name}
-            setId={setId}
-            setName={setName}
+            introduce={introduce}
           />
         </ModalPortal>
       )}
