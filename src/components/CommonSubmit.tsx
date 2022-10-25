@@ -37,7 +37,8 @@ const CommonSubmit = (props: submitType) => {
 
   // password validation - 영어/숫자 포함 8자 이상 16자 이하
   const passwordValidation = () => {
-    const pwRegularExpression = /^[A-Za-z0-9]{8,16}$/;
+    // const pwRegularExpression = /^[A-Za-z0-9]*$/;
+    const pwRegularExpression = /^(?=.*[A-Za-z])(?=.*?\d)[A-Za-z\d]{8,16}$/;
 
     if (!!props.password && !pwRegularExpression.test(props.password)) {
       alert(
