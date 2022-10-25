@@ -1,10 +1,11 @@
 import React, { SetStateAction, Dispatch, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CloseIcon from "../assets/CloseIcon.svg";
 
-import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
+import { UserDeleteAPI } from "../api/User";
 interface props {
   isModal: boolean;
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -15,6 +16,9 @@ interface props {
 }
 
 const ProfileEdit = (props: props) => {
+  // navigate
+  const navigate = useNavigate();
+
   // edit Id
   const [editId, setEditId] = useState("");
 
@@ -45,6 +49,20 @@ const ProfileEdit = (props: props) => {
       setIsEdit(false);
     }
   }, [editId, editIntroduce, editName, props.id, props.introduce, props.name]);
+
+  // 회원 탈퇴 api
+  const userDeleteApi = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (sessionId) {
+      const res = await UserDeleteAPI({ sessionId });
+
+      if (res) {
+        console.log(res);
+        localStorage.removeItem("sessionId");
+        navigate("/");
+      }
+    }
+  };
 
   return (
     <EditWrap>
@@ -78,6 +96,16 @@ const ProfileEdit = (props: props) => {
         introduce={editIntroduce}
         setIsModal={props.setIsModal}
       />
+
+      <DeleteButton>
+        <span
+          onClick={() => {
+            userDeleteApi();
+          }}
+        >
+          회원탈퇴
+        </span>
+      </DeleteButton>
     </EditWrap>
   );
 };
@@ -86,10 +114,10 @@ export default ProfileEdit;
 
 const EditWrap = styled.div`
   width: 350px;
-  height: 93%;
+  height: 97%;
   background: #bda68a;
   position: absolute;
-  top: 3.5%;
+  top: 2%;
   left: calc(50% - 175px);
   display: flex;
   flex-direction: column;
@@ -138,4 +166,18 @@ const EditInput = styled.input`
   padding: 0 0 0 10px;
   margin-bottom: 40px;
   color: #767971;
+`;
+
+const DeleteButton = styled.p`
+  margin: 10px 0 0 0;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 16px;
+  color: #767971;
+
+  & span {
+    cursor: pointer;
+  }
 `;

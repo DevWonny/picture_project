@@ -70,6 +70,22 @@ export const LogoutAPI = async (props: UserData) => {
   }
 };
 
+// user delete api
+export const UserDeleteAPI = async (props: UserData) => {
+  const userData = {
+    sessionid: props.sessionId,
+  };
+
+  try {
+    const res = await axios.post(`http://localhost:5000/user/delete`, userData);
+
+    if (res) {
+      return res;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 // user information fetch
 export const UserFetch = async (props: UserData) => {
   try {
