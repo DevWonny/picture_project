@@ -62,20 +62,6 @@ const CommonSubmit = (props: submitType) => {
     return true;
   };
 
-  // name validation - 영어 / 한글
-  const nameValidation = () => {
-    // 모바일 경우도 확인 해야함! 천지인 키패드!!
-    // const nameRegularExpression = /^[a-zA-Zㄱ-ㅎ가-힣]$/;
-    // if (props.name) console.log(nameRegularExpression.test(props.name));
-
-    // if (!!props.name && !nameRegularExpression.test(props.name)) {
-    //   alert("이름을 확인해주세요. 이름은 영문, 한글만 입력해주세요.");
-    //   return false;
-    // }
-
-    return true;
-  };
-
   // register validation
   const onRegisterValidation = () => {
     if (!idValidation()) {
@@ -85,9 +71,6 @@ const CommonSubmit = (props: submitType) => {
       return false;
     }
     if (!passwordCheckValidation()) {
-      return false;
-    }
-    if (!nameValidation()) {
       return false;
     }
     return true;
