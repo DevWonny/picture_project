@@ -4,7 +4,6 @@ import styled from "styled-components";
 import BackButton from "../components/BackButton";
 
 import { ImageUploadAPI } from "../api/Image";
-import axios from "axios";
 
 const Upload = () => {
   // location

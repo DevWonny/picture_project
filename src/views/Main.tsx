@@ -9,6 +9,7 @@ import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
 
 import { UserFetch, LogoutAPI } from "../api/User";
+import { ImageGetAPI } from "../api/Image";
 
 interface Profile {
   isId?: boolean;
@@ -59,6 +60,18 @@ const Main = () => {
     userFetch();
   }, [isModal]);
 
+  // image get api
+  // 위치 변경 필요
+  const imageGetApi = async () => {
+    const res = await ImageGetAPI();
+    if (res) {
+      console.log(res);
+    }
+  };
+
+  useEffect(() => {
+    imageGetApi();
+  }, []);
   return (
     <MainWrap>
       {/* 추후 변경 필요! */}

@@ -27,3 +27,16 @@ export const ImageUploadAPI = async (props: ImageData) => {
     console.log(err);
   }
 };
+
+// image get api
+export const ImageGetAPI = async () => {
+  try {
+    const res = await axios.get(`http://localhost:5000/images/`);
+
+    if (res) {
+      return res;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
