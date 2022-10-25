@@ -1,10 +1,49 @@
+import { ChangeEvent, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 
+import { ImageUploadAPI } from "../api/Image";
+import axios from "axios";
+
 const Upload = () => {
   // location
   const location = useLocation();
+
+  // file
+  const [file, setFile] = useState(null);
+  // file name
+  const [fileName, setFileName] = useState(null);
+
+  // image src
+  // 업로드 하려는 이미지 미리보기 위한 state
+  const [imageSrc, setImageSrc] = useState(null);
+
+  // image
+  const imageDrop = (e: any) => {
+    setFile(e.target.files[0]);
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(e.target.files[0]);
+    fileReader.onload = (e: any) => {
+      setImageSrc(e.target.result);
+    };
+  };
+
+  const imageUploadApi = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    if (!!sessionId && !!file) {
+      const res = await ImageUploadAPI({
+        sessionId: sessionId,
+        file: file,
+      });
+
+      if (res) {
+        console.log(res);
+      }
+    }
+  };
 
   return (
     <UploadWrap>
@@ -18,10 +57,18 @@ const Upload = () => {
       </UploadHeader>
       <UploadContentWrap>
         {/* image upload */}
-        <UploadContentContainer></UploadContentContainer>
+        <UploadContentContainer type="file" onChange={(e) => imageDrop(e)} />
+        {/* {imageSrc && <img src={imageSrc} alt="image_test" />} */}
+
         {/* text upload */}
         <UploadContentContainer></UploadContentContainer>
-        <UploadButton>이미지 업로드 버튼</UploadButton>
+        <UploadButton
+          onClick={() => {
+            imageUploadApi();
+          }}
+        >
+          이미지 업로드 버튼
+        </UploadButton>
       </UploadContentWrap>
     </UploadWrap>
   );
@@ -68,12 +115,14 @@ const UploadContentWrap = styled.div`
   position: relative;
 `;
 
-const UploadContentContainer = styled.div`
+const UploadContentContainer = styled.input`
   width: 400px;
   height: 35%;
   background: #cabfae;
   border-radius: 10px;
   margin-top: 55px;
+  border: none;
+  outline: none;
 `;
 
 const UploadButton = styled.div`
