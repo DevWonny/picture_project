@@ -65,52 +65,64 @@ const ProfileEdit = (props: props) => {
   };
 
   return (
-    <EditWrap>
-      <EditCloseButton onClick={() => props.setIsModal(false)}>
-        <img src={CloseIcon} alt="close_icon" />
-      </EditCloseButton>
-      <h1>Profile Edit</h1>
-      <EditProfileImage></EditProfileImage>
-      <EditInput
-        placeholder="ID"
-        value={editId}
-        onChange={(e) => setEditId(e.target.value)}
-      />
-      <EditInput placeholder="PW" />
-      <EditInput
-        placeholder="Name"
-        value={editName}
-        onChange={(e) => {
-          setEditName(e.target.value);
-        }}
-      />
-      <EditInput
-        placeholder="Introduce"
-        value={editIntroduce}
-        onChange={(e) => setEditIntroduce(e.target.value)}
-      />
-      <CommonSubmit
-        submitText="Change"
-        isState={isEdit}
-        name={editName}
-        introduce={editIntroduce}
-        setIsModal={props.setIsModal}
-      />
-
-      <DeleteButton>
-        <span
-          onClick={() => {
-            userDeleteApi();
+    <>
+      <EditBack></EditBack>
+      <EditWrap>
+        <EditCloseButton onClick={() => props.setIsModal(false)}>
+          <img src={CloseIcon} alt="close_icon" />
+        </EditCloseButton>
+        <h1>Profile Edit</h1>
+        <EditProfileImage></EditProfileImage>
+        <EditInput
+          placeholder="ID"
+          value={editId}
+          onChange={(e) => setEditId(e.target.value)}
+        />
+        <EditInput placeholder="PW" />
+        <EditInput
+          placeholder="Name"
+          value={editName}
+          onChange={(e) => {
+            setEditName(e.target.value);
           }}
-        >
-          회원탈퇴
-        </span>
-      </DeleteButton>
-    </EditWrap>
+        />
+        <EditInput
+          placeholder="Introduce"
+          value={editIntroduce}
+          onChange={(e) => setEditIntroduce(e.target.value)}
+        />
+        <CommonSubmit
+          submitText="Change"
+          isState={isEdit}
+          name={editName}
+          introduce={editIntroduce}
+          setIsModal={props.setIsModal}
+        />
+
+        <DeleteButton>
+          <span
+            onClick={() => {
+              userDeleteApi();
+            }}
+          >
+            회원탈퇴
+          </span>
+        </DeleteButton>
+      </EditWrap>
+    </>
   );
 };
 
 export default ProfileEdit;
+const EditBack = styled.div`
+  width: 450px;
+  height: 100%;
+  background: #000;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 225px);
+`;
 
 const EditWrap = styled.div`
   width: 350px;
