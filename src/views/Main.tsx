@@ -66,6 +66,12 @@ const Main = () => {
     }
   };
 
+  // detail page
+  const detailLink = (params: string) => {
+    console.log(params);
+    navigate(`/detail/${params}`);
+  };
+
   // image GET useEffect
   useEffect(() => {
     imageGetApi();
@@ -109,7 +115,12 @@ const Main = () => {
         {imageList.length > 0 &&
           imageList.map((el, index) => {
             return (
-              <ImageDiv key={`picture_project_main_key_${index}`}>
+              <ImageDiv
+                key={`picture_project_main_key_${index}`}
+                onClick={() => {
+                  detailLink(el.key);
+                }}
+              >
                 <img
                   src={`http://localhost:5000/uploads/${el.key}`}
                   alt="Image"

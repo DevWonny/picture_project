@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import DeleteIcon from "../assets/DeleteIcon.svg";
 
@@ -7,6 +7,9 @@ import BackButton from "../components/BackButton";
 const Detail = () => {
   // location
   const location = useLocation();
+  // params
+  const params = useParams();
+
   return (
     <DetailWrap>
       {/* Header */}

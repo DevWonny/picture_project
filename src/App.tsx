@@ -19,7 +19,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/main" element={<Main />} />
-      <Route path="/detail" element={<Detail />} />
+      <Route path="/detail/:image" element={<Detail />} />
       <Route path="/upload" element={<Upload />} />
       <Route path="/loading" element={<Loading loadingText="test" />} />
     </Routes>
