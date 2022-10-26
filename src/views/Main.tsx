@@ -26,8 +26,9 @@ const Main = () => {
   // name
   const [name, setName] = useState("");
   //introduce
-  // 추후 introduce 구현
   const [introduce, setIntroduce] = useState("");
+  // image List
+  const [imageList, setImageList] = useState<any[]>([]);
 
   // user api 호출
   const userFetch = async () => {
@@ -56,22 +57,25 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {
-    userFetch();
-  }, [isModal]);
-
   // image get api
   // 위치 변경 필요
   const imageGetApi = async () => {
     const res = await ImageGetAPI();
     if (res) {
-      console.log(res);
+      setImageList(res);
     }
   };
 
+  // image GET useEffect
   useEffect(() => {
     imageGetApi();
   }, []);
+
+  // user data get useEffect
+  useEffect(() => {
+    userFetch();
+  }, [isModal]);
+
   return (
     <MainWrap>
       {/* 추후 변경 필요! */}
@@ -103,51 +107,22 @@ const Main = () => {
       {/* image 영역 */}
       <ImageWrap>
         <ImageContainer>
-          <ImageDiv>
-            <MultiImage>
-              <img src={MultipleImage} alt="Multi_image" />
-            </MultiImage>
-            1
-          </ImageDiv>
-          <ImageDiv>2</ImageDiv>
-          <ImageDiv>3</ImageDiv>
+          {imageList.length > 0 &&
+            imageList.map((el) => {
+              return (
+                <ImageDiv>
+                  <img
+                    src={`http://localhost:5000/uploads/${el.key}`}
+                    alt="Image"
+                  />
+                </ImageDiv>
+              );
+            })}
         </ImageContainer>
 
-        <ImageContainer>
-          <ImageDiv>4</ImageDiv>
-          <ImageDiv>5</ImageDiv>
-          <ImageDiv>6</ImageDiv>
-        </ImageContainer>
-
-        <ImageContainer>
-          <ImageDiv>7</ImageDiv>
-          <ImageDiv>8</ImageDiv>
-          <ImageDiv>9</ImageDiv>
-        </ImageContainer>
-
-        <ImageContainer>
-          <ImageDiv>
-            <MultiImage>
-              <img src={MultipleImage} alt="Multi_image" />
-            </MultiImage>
-            1
-          </ImageDiv>
-          <ImageDiv>2</ImageDiv>
-          <ImageDiv>3</ImageDiv>
-        </ImageContainer>
-
-        <ImageContainer>
-          <ImageDiv>4</ImageDiv>
-          <ImageDiv>5</ImageDiv>
-          <ImageDiv>6</ImageDiv>
-        </ImageContainer>
-
-        <ImageContainer>
-          <ImageDiv>7</ImageDiv>
-          <ImageDiv>8</ImageDiv>
-          <ImageDiv>9</ImageDiv>
-        </ImageContainer>
+        <TestDiv></TestDiv>
       </ImageWrap>
+
       {/* image add button */}
       <AddImageContainer
         onClick={() => {
@@ -274,6 +249,10 @@ const ImageDiv = styled.div`
   height: 100%;
   background: #e2e2e0;
   position: relative;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const MultiImage = styled.div`
@@ -290,12 +269,12 @@ const MultiImage = styled.div`
 `;
 
 const AddImageContainer = styled.div`
-  width: 100%;
+  width: 450px;
   height: 70px;
   background: #e2e2e0;
   margin-top: 65px;
-  position: sticky;
-  left: 0;
+  position: fixed;
+  left: calc(50% - 225px);
   bottom: 0;
   display: flex;
   align-items: center;
@@ -311,4 +290,9 @@ const AddImageDiv = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+const TestDiv = styled.div`
+  width: 100%;
+  height: 100px;
 `;

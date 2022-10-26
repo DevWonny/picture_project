@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 
@@ -8,6 +8,8 @@ import { ImageUploadAPI } from "../api/Image";
 const Upload = () => {
   // location
   const location = useLocation();
+  // navigate
+  const navigate = useNavigate();
 
   // file
   const [file, setFile] = useState(null);
@@ -40,6 +42,7 @@ const Upload = () => {
 
       if (res) {
         console.log(res);
+        navigate("/main");
       }
     }
   };
