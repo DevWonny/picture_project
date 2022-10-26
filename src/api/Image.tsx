@@ -3,6 +3,7 @@ import axios from "axios";
 interface ImageData {
   file?: any;
   sessionId?: string;
+  imageId?: string;
 }
 
 // image upload api
@@ -35,6 +36,23 @@ export const ImageGetAPI = async () => {
 
     if (res) {
       return res.data;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// image delete api
+export const ImageDeleteAPI = async (props: ImageData) => {
+  console.log("imageId", props.imageId);
+  try {
+    const res = await axios.delete(
+      `http://localhost:5000/images/${props.imageId}`,
+      { headers: { sessionid: props.sessionId } }
+    );
+
+    if (res) {
+      return res;
     }
   } catch (err) {
     console.log(err);

@@ -1,14 +1,33 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DeleteIcon from "../assets/DeleteIcon.svg";
 
 import BackButton from "../components/BackButton";
+import { ImageDeleteAPI } from "../api/Image";
 
 const Detail = () => {
   // location
   const location = useLocation();
   // params
   const params = useParams();
+  // navigate
+  const navigate = useNavigate();
+
+  // image delete api
+  const imageDeleteApi = async () => {
+    const sessionid = localStorage.getItem("sessionId");
+    if (sessionid) {
+      const res = await ImageDeleteAPI({
+        imageId: location.state,
+        sessionId: sessionid,
+      });
+
+      if (res) {
+        console.log(res);
+        navigate("/main");
+      }
+    }
+  };
 
   return (
     <DetailWrap>
@@ -26,15 +45,24 @@ const Detail = () => {
       <DetailContainer>
         <DetailContainerHeader>
           <DetailProfileImage></DetailProfileImage>
-          <DetailDeleteButton>
+          <DetailDeleteButton
+            onClick={() => {
+              imageDeleteApi();
+            }}
+          >
             <img src={DeleteIcon} alt="delete_icon" />
           </DetailDeleteButton>
         </DetailContainerHeader>
         {/* 이미지 영역 */}
-        <DetailImageContainer></DetailImageContainer>
+        <DetailImageContainer>
+          <img
+            src={`http://localhost:5000/uploads/${params.image}`}
+            alt="image"
+          />
+        </DetailImageContainer>
 
         {/* text 영역 */}
-        <DetailTextContainer></DetailTextContainer>
+        {/* <DetailTextContainer></DetailTextContainer> */}
       </DetailContainer>
     </DetailWrap>
   );
@@ -108,17 +136,16 @@ const DetailDeleteButton = styled.div`
   right: 20px;
   top: 20px;
   cursor: pointer;
-
-  & img {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const DetailImageContainer = styled.div`
   width: 100%;
   height: 70%;
   background: #e2e2e0;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const DetailTextContainer = styled.div`

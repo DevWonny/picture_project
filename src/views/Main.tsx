@@ -67,9 +67,9 @@ const Main = () => {
   };
 
   // detail page
-  const detailLink = (params: string) => {
+  const detailLink = (params: string, detailId: string) => {
     console.log(params);
-    navigate(`/detail/${params}`);
+    navigate(`/detail/${params}`, { state: detailId });
   };
 
   // image GET useEffect
@@ -118,7 +118,7 @@ const Main = () => {
               <ImageDiv
                 key={`picture_project_main_key_${index}`}
                 onClick={() => {
-                  detailLink(el.key);
+                  detailLink(el.key, el._id);
                 }}
               >
                 <img
