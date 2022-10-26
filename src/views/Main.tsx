@@ -62,7 +62,7 @@ const Main = () => {
   const imageGetApi = async () => {
     const res = await ImageGetAPI();
     if (res) {
-      setImageList(res);
+      setImageList(res.reverse());
     }
   };
 
@@ -108,9 +108,9 @@ const Main = () => {
       <ImageWrap>
         <ImageContainer>
           {imageList.length > 0 &&
-            imageList.map((el) => {
+            imageList.map((el, index) => {
               return (
-                <ImageDiv>
+                <ImageDiv key={`picture_project_main_key_${index}`}>
                   <img
                     src={`http://localhost:5000/uploads/${el.key}`}
                     alt="Image"
