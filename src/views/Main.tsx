@@ -106,19 +106,17 @@ const Main = () => {
       </ProfileContainer>
       {/* image 영역 */}
       <ImageWrap>
-        <ImageContainer>
-          {imageList.length > 0 &&
-            imageList.map((el, index) => {
-              return (
-                <ImageDiv key={`picture_project_main_key_${index}`}>
-                  <img
-                    src={`http://localhost:5000/uploads/${el.key}`}
-                    alt="Image"
-                  />
-                </ImageDiv>
-              );
-            })}
-        </ImageContainer>
+        {imageList.length > 0 &&
+          imageList.map((el, index) => {
+            return (
+              <ImageDiv key={`picture_project_main_key_${index}`}>
+                <img
+                  src={`http://localhost:5000/uploads/${el.key}`}
+                  alt="Image"
+                />
+              </ImageDiv>
+            );
+          })}
 
         <TestDiv></TestDiv>
       </ImageWrap>
@@ -234,21 +232,17 @@ const ImageWrap = styled.div`
   position: relative;
   left: 4%;
   top: 25px;
-`;
-
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 133px;
-  margin-bottom: 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;
 
 const ImageDiv = styled.div`
   width: 133px;
-  height: 100%;
+  height: 133px;
   background: #e2e2e0;
   position: relative;
+  margin-bottom: 10px;
   & img {
     width: 100%;
     height: 100%;
