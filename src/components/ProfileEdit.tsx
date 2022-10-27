@@ -66,13 +66,12 @@ const ProfileEdit = (props: props) => {
 
   return (
     <>
-      <EditBack></EditBack>
+      <EditBack />
       <EditWrap>
         <EditCloseButton onClick={() => props.setIsModal(false)}>
           <img src={CloseIcon} alt="close_icon" />
         </EditCloseButton>
         <h1>Profile Edit</h1>
-        <EditProfileImage></EditProfileImage>
         <EditInput
           placeholder="ID"
           value={editId}
@@ -89,6 +88,7 @@ const ProfileEdit = (props: props) => {
         <EditInput
           placeholder="Introduce"
           value={editIntroduce}
+          isLast={true}
           onChange={(e) => setEditIntroduce(e.target.value)}
         />
         <CommonSubmit
@@ -126,10 +126,10 @@ const EditBack = styled.div`
 
 const EditWrap = styled.div`
   width: 350px;
-  height: 97%;
+  height: 80%;
   background: #bda68a;
   position: absolute;
-  top: 2%;
+  top: 10%;
   left: calc(50% - 175px);
   display: flex;
   flex-direction: column;
@@ -158,16 +158,7 @@ const EditCloseButton = styled.div`
   }
 `;
 
-const EditProfileImage = styled.div`
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: #000;
-  margin-top: 30px;
-  margin-bottom: 20px;
-`;
-
-const EditInput = styled.input`
+const EditInput = styled.input<{ isLast?: boolean }>`
   width: 290px;
   height: 60px;
   background: #cabfae;
@@ -176,7 +167,8 @@ const EditInput = styled.input`
   border-radius: 10px;
   font-size: 20px;
   padding: 0 0 0 10px;
-  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: ${(props) => props.isLast && "40px"};
   color: #767971;
 `;
 

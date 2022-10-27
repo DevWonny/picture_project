@@ -111,8 +111,8 @@ const Main = () => {
         </ProfileContent>
       </ProfileContainer>
       {/* image 영역 */}
-      <ImageWrap>
-        {imageList.length > 0 &&
+      <ImageWrap isImage={imageList.length > 0}>
+        {imageList.length > 0 ? (
           imageList.map((el, index) => {
             return (
               <ImageDiv
@@ -123,13 +123,16 @@ const Main = () => {
               >
                 <img
                   src={`http://localhost:5000/uploads/${el.key}`}
-                  alt="Image"
+                  alt="main_image"
                 />
               </ImageDiv>
             );
-          })}
+          })
+        ) : (
+          <NoImageText>첫 이미지를 올려주세요!</NoImageText>
+        )}
 
-        <TestDiv></TestDiv>
+        {imageList.length > 0 && <TestDiv />}
       </ImageWrap>
 
       {/* image add button */}
@@ -237,15 +240,16 @@ const ProfileText = styled.div<Profile>`
   cursor: ${(props) => props.isEdit && "pointer"};
 `;
 
-const ImageWrap = styled.div`
+const ImageWrap = styled.div<{ isImage: boolean }>`
   width: 92%;
   overflow: hidden;
   position: relative;
   left: 4%;
   top: 25px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-wrap: ${(props) => (props.isImage ? "wrap" : "nowrap")};
+  justify-content: ${(props) => (props.isImage ? "space-between" : "center")};
+  align-items: ${(props) => props.isImage && "center"};
 `;
 
 const ImageDiv = styled.div`
@@ -258,6 +262,11 @@ const ImageDiv = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+const NoImageText = styled.p`
+  font-size: 30px;
+  color: #e2e2e0;
 `;
 
 const MultiImage = styled.div`

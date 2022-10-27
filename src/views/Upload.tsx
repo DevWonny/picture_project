@@ -13,8 +13,6 @@ const Upload = () => {
 
   // file
   const [file, setFile] = useState(null);
-  // file name
-  const [fileName, setFileName] = useState(null);
 
   // image src
   // 업로드 하려는 이미지 미리보기 위한 state

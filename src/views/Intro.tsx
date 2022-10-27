@@ -28,7 +28,7 @@ const IntroWrap = styled.div`
   position: relative;
   margin: 0 auto;
   text-align: center;
-  line-height: 900px;
+  line-height: 100vh;
 
   & p {
     margin: 0;
