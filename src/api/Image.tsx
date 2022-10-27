@@ -43,6 +43,21 @@ export const ImageGetAPI = async () => {
   }
 };
 
+// image detail get api
+export const ImageDetailGetAPI = async (props: ImageData) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:5000/images/${props.imageId}`
+    );
+
+    if (res) {
+      return res;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // image delete api
 export const ImageDeleteAPI = async (props: ImageData) => {
   console.log("imageId", props.imageId);

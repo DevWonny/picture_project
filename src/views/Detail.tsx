@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DeleteIcon from "../assets/DeleteIcon.svg";
 
 import BackButton from "../components/BackButton";
-import { ImageDeleteAPI } from "../api/Image";
+import { ImageDeleteAPI, ImageDetailGetAPI } from "../api/Image";
 
 const Detail = () => {
   // location
@@ -12,6 +13,12 @@ const Detail = () => {
   const params = useParams();
   // navigate
   const navigate = useNavigate();
+
+  // text state
+  const [text, setText] = useState("");
+
+  // date
+  const [date, setDate] = useState("");
 
   // image delete api
   const imageDeleteApi = async () => {
@@ -29,6 +36,23 @@ const Detail = () => {
     }
   };
 
+  // image detail get api
+  const imageDetailGetApi = async () => {
+    const res = await ImageDetailGetAPI({ imageId: location.state });
+
+    if (res) {
+      console.log(res);
+      setText(res.data.text);
+      setDate(res.data.createdAt);
+    }
+  };
+
+  useEffect(() => {
+    imageDetailGetApi();
+  }, []);
+
+  console.log(date.split("T"));
+
   return (
     <DetailWrap>
       {/* Header */}
@@ -44,7 +68,6 @@ const Detail = () => {
       {/* Detail Contents */}
       <DetailContainer>
         <DetailContainerHeader>
-          <DetailProfileImage></DetailProfileImage>
           <DetailDeleteButton
             onClick={() => {
               imageDeleteApi();
@@ -57,12 +80,15 @@ const Detail = () => {
         <DetailImageContainer>
           <img
             src={`http://localhost:5000/uploads/${params.image}`}
-            alt="image"
+            alt="detail_image"
           />
         </DetailImageContainer>
 
+        <DateContainer>{date.split("T")[0]}</DateContainer>
         {/* text 영역 */}
-        {/* <DetailTextContainer></DetailTextContainer> */}
+        <DetailTextContainer>
+          <p>{text}</p>
+        </DetailTextContainer>
       </DetailContainer>
     </DetailWrap>
   );
@@ -117,17 +143,6 @@ const DetailContainerHeader = styled.div`
   height: 70px;
   position: relative;
 `;
-const DetailProfileImage = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #000;
-  position: relative;
-  left: 20px;
-  right: 0;
-  bottom: 0;
-  top: 10px;
-`;
 
 const DetailDeleteButton = styled.div`
   width: 30px;
@@ -140,7 +155,7 @@ const DetailDeleteButton = styled.div`
 
 const DetailImageContainer = styled.div`
   width: 100%;
-  height: 70%;
+  height: 65%;
   background: #e2e2e0;
   & img {
     width: 100%;
@@ -150,8 +165,22 @@ const DetailImageContainer = styled.div`
 
 const DetailTextContainer = styled.div`
   width: 100%;
-  height: 15%;
-  background-color: #e2e2e0;
+  height: 20%;
+  background-color: #cabfae;
   position: absolute;
   bottom: 0;
+
+  & p {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+`;
+
+const DateContainer = styled.div`
+  width: 100%;
+  height: 30px;
+  text-align: right;
+  line-height: 30px;
+  color: #e2e2e0;
 `;
