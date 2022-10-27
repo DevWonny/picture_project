@@ -1,7 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
+import AddImage from "../assets/AddImage.svg";
 
 import { ImageUploadAPI } from "../api/Image";
 
@@ -45,6 +46,8 @@ const Upload = () => {
     }
   };
 
+  console.log(file);
+
   return (
     <UploadWrap>
       <UploadHeader>
@@ -57,17 +60,33 @@ const Upload = () => {
       </UploadHeader>
       <UploadContentWrap>
         {/* image upload */}
-        <UploadContentContainer type="file" onChange={(e) => imageDrop(e)} />
-        {/* {imageSrc && <img src={imageSrc} alt="image_test" />} */}
+        <UploadContentContainer>
+          <Preview>
+            {imageSrc ? (
+              <img src={imageSrc} alt="image_test" />
+            ) : (
+              <p>오늘 하루를 표현할 사진을 올려주세요!</p>
+            )}
+          </Preview>
+          <ImageSearchButton>
+            <input
+              type="file"
+              onChange={(e) => {
+                imageDrop(e);
+              }}
+            />
+            이미지 찾기
+          </ImageSearchButton>
+        </UploadContentContainer>
 
         {/* text upload */}
-        <UploadContentContainer></UploadContentContainer>
+        <TextWrap placeholder="오늘 하루를 남겨보세요!" />
         <UploadButton
           onClick={() => {
             imageUploadApi();
           }}
         >
-          이미지 업로드 버튼
+          <img src={AddImage} alt="add_image" />
         </UploadButton>
       </UploadContentWrap>
     </UploadWrap>
@@ -115,14 +134,16 @@ const UploadContentWrap = styled.div`
   position: relative;
 `;
 
-const UploadContentContainer = styled.input`
+const UploadContentContainer = styled.div`
   width: 400px;
-  height: 35%;
+  height: 50%;
   background: #cabfae;
   border-radius: 10px;
   margin-top: 55px;
-  border: none;
-  outline: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const UploadButton = styled.div`
@@ -134,4 +155,61 @@ const UploadButton = styled.div`
   position: absolute;
   bottom: 0;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImageSearchButton = styled.div`
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #8b7c67;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+
+  & input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    ::-webkit-file-upload-button {
+      cursor: pointer;
+    }
+  }
+`;
+
+const Preview = styled.div`
+  width: 300px;
+  height: 70%;
+  line-height: 16;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+
+  & p {
+    margin: 0;
+    text-align: center;
+  }
+`;
+
+const TextWrap = styled.textarea`
+  width: 400px;
+  height: 20%;
+  background: #cabfae;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 50px;
+  padding: 10px 0 0 0;
 `;
