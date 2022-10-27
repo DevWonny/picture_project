@@ -4,13 +4,14 @@ interface ImageData {
   file?: any;
   sessionId?: string;
   imageId?: string;
+  imageText?: string;
 }
-
 // image upload api
 export const ImageUploadAPI = async (props: ImageData) => {
   const formData = new FormData();
-  if (!!props.file) {
+  if (!!props.file && !!props.imageText) {
     formData.append("image", props.file);
+    formData.append("text", props.imageText);
   }
 
   try {

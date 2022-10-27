@@ -19,6 +19,9 @@ const Upload = () => {
   // 업로드 하려는 이미지 미리보기 위한 state
   const [imageSrc, setImageSrc] = useState(null);
 
+  // image Text
+  const [imageText, setImageText] = useState("");
+
   // image
   const imageDrop = (e: any) => {
     setFile(e.target.files[0]);
@@ -37,6 +40,7 @@ const Upload = () => {
       const res = await ImageUploadAPI({
         sessionId: sessionId,
         file: file,
+        imageText: imageText,
       });
 
       if (res) {
@@ -45,8 +49,6 @@ const Upload = () => {
       }
     }
   };
-
-  console.log(file);
 
   return (
     <UploadWrap>
@@ -80,7 +82,12 @@ const Upload = () => {
         </UploadContentContainer>
 
         {/* text upload */}
-        <TextWrap placeholder="오늘 하루를 남겨보세요!" />
+        <TextWrap
+          placeholder="오늘 하루를 남겨보세요!"
+          onChange={(e) => {
+            setImageText(e.target.value);
+          }}
+        />
         <UploadButton
           onClick={() => {
             imageUploadApi();
