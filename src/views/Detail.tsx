@@ -30,7 +30,6 @@ const Detail = () => {
       });
 
       if (res) {
-        console.log(res);
         navigate("/main");
       }
     }
@@ -41,7 +40,6 @@ const Detail = () => {
     const res = await ImageDetailGetAPI({ imageId: location.state });
 
     if (res) {
-      console.log(res);
       setText(res.data.text);
       setDate(res.data.createdAt);
     }
@@ -50,8 +48,6 @@ const Detail = () => {
   useEffect(() => {
     imageDetailGetApi();
   }, []);
-
-  console.log(date.split("T"));
 
   return (
     <DetailWrap>

@@ -67,7 +67,6 @@ const Main = () => {
 
   // detail page
   const detailLink = (params: string, detailId: string) => {
-    console.log(params);
     navigate(`/detail/${params}`, { state: detailId });
   };
 

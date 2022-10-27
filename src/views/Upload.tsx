@@ -44,7 +44,6 @@ const Upload = () => {
       });
 
       if (res) {
-        console.log(res);
         navigate("/main");
       }
     }

@@ -57,7 +57,6 @@ const ProfileEdit = (props: props) => {
       const res = await UserDeleteAPI({ sessionId });
 
       if (res) {
-        console.log(res);
         localStorage.removeItem("sessionId");
         navigate("/");
       }

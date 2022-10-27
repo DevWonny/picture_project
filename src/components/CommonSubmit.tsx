@@ -140,7 +140,6 @@ const CommonSubmit = (props: submitType) => {
       });
       if (res) {
         if (props.setIsModal) props.setIsModal(false);
-        console.log(res);
       }
     }
   };
