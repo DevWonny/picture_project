@@ -95,7 +95,6 @@ const Main = () => {
       </LogoutButton>
       {/* profile 영역 */}
       <ProfileContainer>
-        <ProfileImage></ProfileImage>
         <ProfileContent>
           <ProfileText isId={true}>{id}</ProfileText>
           <ProfileText>{name}</ProfileText>
@@ -213,15 +212,8 @@ const ProfileContainer = styled.div`
   border-bottom: 2px solid #cabfae;
 `;
 
-const ProfileImage = styled.div`
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: #000;
-`;
-
 const ProfileContent = styled.div`
-  width: 200px;
+  width: 92%;
   height: 100%;
   position: relative;
 `;
