@@ -33,7 +33,11 @@ const Login = () => {
         <h1>Login</h1>
 
         <CommonInput placeHolderText="ID" setFunction={setId} />
-        <CommonInput placeHolderText="PW" setFunction={setPassword} />
+        <CommonInput
+          placeHolderText="PW"
+          setFunction={setPassword}
+          type="password"
+        />
         <CommonSubmit
           submitText="Login"
           isState={isSubmit}

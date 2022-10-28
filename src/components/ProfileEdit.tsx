@@ -68,7 +68,9 @@ const ProfileEdit = (props: props) => {
           value={editId}
           onChange={(e) => setEditId(e.target.value)}
         />
-        <EditInput placeholder="PW" />
+
+        {/* 추후 변경 예정 */}
+        <EditInput placeholder="PW" type="password" />
         <EditInput
           placeholder="Name"
           value={editName}

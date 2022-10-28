@@ -5,6 +5,7 @@ interface inputPlaceholder {
   placeHolderText: string;
   setFunction?: Dispatch<SetStateAction<string>>;
   value?: string;
+  type?: string;
 }
 
 const CommonInput = (props: inputPlaceholder) => {
@@ -12,6 +13,7 @@ const CommonInput = (props: inputPlaceholder) => {
     <InputContainer
       placeholder={props.placeHolderText}
       value={props.value}
+      type={props.type}
       onChange={(e) => {
         if (props.setFunction) {
           props.setFunction(e.target.value);
