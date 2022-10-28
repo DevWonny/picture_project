@@ -6,7 +6,7 @@ import CloseIcon from "../assets/CloseIcon.svg";
 import CommonSubmit from "../components/CommonSubmit";
 import CommonConfirm from "../components/CommonConfirm";
 
-import { UserDeleteAPI } from "../api/User";
+import ModalPortal from "./ModalPortal";
 interface props {
   isModal: boolean;
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -32,6 +32,9 @@ const ProfileEdit = (props: props) => {
   // edit submit state
   const [isEdit, setIsEdit] = useState(false);
 
+  // 회원탈퇴 state
+  const [isWithdrawal, setIsWithdrawal] = useState(false);
+
   useEffect(() => {
     if (!!props.id && !!props.name && !!props.introduce) {
       setEditId(props.id);
@@ -51,19 +54,6 @@ const ProfileEdit = (props: props) => {
       setIsEdit(false);
     }
   }, [editId, editIntroduce, editName, props.id, props.introduce, props.name]);
-
-  // 회원 탈퇴 api
-  const userDeleteApi = async () => {
-    const sessionId = localStorage.getItem("sessionId");
-    if (sessionId) {
-      const res = await UserDeleteAPI({ sessionId });
-
-      if (res) {
-        localStorage.removeItem("sessionId");
-        navigate("/");
-      }
-    }
-  };
 
   return (
     <>
@@ -103,13 +93,19 @@ const ProfileEdit = (props: props) => {
         <DeleteButton>
           <span
             onClick={() => {
-              userDeleteApi();
+              setIsWithdrawal(true);
             }}
           >
             회원탈퇴
           </span>
         </DeleteButton>
       </EditWrap>
+
+      {isWithdrawal && (
+        <ModalPortal>
+          <CommonConfirm setIsConfirm={setIsWithdrawal} isText={"withdrawal"} />
+        </ModalPortal>
+      )}
     </>
   );
 };

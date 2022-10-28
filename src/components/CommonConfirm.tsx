@@ -2,11 +2,13 @@ import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { LogoutAPI } from "../api/User";
+import { LogoutAPI, UserDeleteAPI } from "../api/User";
+import { ImageDeleteAPI } from "../api/Image";
 
 interface confirmData {
   setIsConfirm?: Dispatch<SetStateAction<boolean>>;
   isText?: string;
+  detailId?: string;
 }
 
 const CommonConfirm = (props: confirmData) => {
@@ -25,6 +27,47 @@ const CommonConfirm = (props: confirmData) => {
       }
     }
   };
+
+  // 회원탈퇴 api 호출
+  const userDeleteApi = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (sessionId) {
+      const res = await UserDeleteAPI({ sessionId });
+
+      if (res) {
+        localStorage.removeItem("sessionId");
+        navigate("/");
+      }
+    }
+  };
+
+  // image delete api
+  const imageDeleteApi = async () => {
+    const sessionid = localStorage.getItem("sessionId");
+    if (sessionid) {
+      const res = await ImageDeleteAPI({
+        imageId: props.detailId,
+        sessionId: sessionid,
+      });
+
+      if (res) {
+        navigate("/main");
+      }
+    }
+  };
+
+  const apiCall = () => {
+    if (props.isText === "logout") {
+      logoutApi();
+      return;
+    } else if (props.isText === "withdrawal") {
+      userDeleteApi();
+      return;
+    } else {
+      imageDeleteApi();
+    }
+  };
+
   return (
     <>
       <ConfirmBack />
@@ -32,14 +75,14 @@ const CommonConfirm = (props: confirmData) => {
         <ConfirmText>
           {props.isText === "logout"
             ? "로그아웃 하시겠습니까?"
-            : props.isText === "Withdrawal"
+            : props.isText === "withdrawal"
             ? "회원탈퇴를 하시겠습니까"
             : "게시물을 삭제하시겠습니까?"}
         </ConfirmText>
         <ConfirmButtonContainer>
           <ConfirmButton
             onClick={() => {
-              logoutApi();
+              apiCall();
             }}
           >
             확인
