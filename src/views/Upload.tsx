@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
@@ -49,6 +49,14 @@ const Upload = () => {
     }
   };
 
+  // 글자 수 제한
+  useEffect(() => {
+    if (imageText.length > 300) {
+      alert("300자 이내로 입력해주세요!");
+      setImageText(imageText.substring(0, 300));
+    }
+  }, [imageText]);
+
   return (
     <UploadWrap>
       <UploadHeader>
@@ -82,7 +90,8 @@ const Upload = () => {
 
         {/* text upload */}
         <TextWrap
-          placeholder="오늘 하루를 남겨보세요!"
+          placeholder="오늘 하루를 남겨보세요!(300자 이내)"
+          value={imageText}
           onChange={(e) => {
             setImageText(e.target.value);
           }}
