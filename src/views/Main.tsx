@@ -6,6 +6,7 @@ import Logout from "../assets/Logout.svg";
 
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
+import CommonConfirm from "../components/CommonConfirm";
 
 import { UserFetch, LogoutAPI } from "../api/User";
 import { ImageGetAPI } from "../api/Image";
@@ -19,6 +20,7 @@ interface Profile {
 const Main = () => {
   // navigate
   const navigate = useNavigate();
+  // profile Modal state
   const [isModal, setIsModal] = useState(false);
   // id
   const [id, setId] = useState("");
@@ -28,6 +30,8 @@ const Main = () => {
   const [introduce, setIntroduce] = useState("");
   // image List
   const [imageList, setImageList] = useState<any[]>([]);
+  // logout Modal State
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
 
   // user api 호출
   const userFetch = async () => {
@@ -38,20 +42,6 @@ const Main = () => {
         setId(res.data.id);
         setName(res.data.name);
         setIntroduce(res.data.introduce);
-      }
-    }
-  };
-
-  // logout api 호출
-  const logoutApi = async () => {
-    const sessionId = localStorage.getItem("sessionId");
-    if (!!sessionId) {
-      const res = await LogoutAPI({ sessionId: sessionId });
-      if (res) {
-        alert("logOut!");
-        // logout 과 동시에 localStorage에서 session Id 제거
-        localStorage.removeItem("sessionId");
-        navigate("/");
       }
     }
   };
@@ -83,13 +73,16 @@ const Main = () => {
     <MainWrap>
       {/* 추후 변경 필요! */}
       <h1>An Unfinished Story</h1>
+
+      {/* logout button */}
       <LogoutButton
         onClick={() => {
-          logoutApi();
+          setIsLogoutModal(true);
         }}
       >
         <img src={Logout} alt="logout_button" />
       </LogoutButton>
+
       {/* profile 영역 */}
       <ProfileContainer>
         <ProfileContent>
@@ -152,6 +145,12 @@ const Main = () => {
             name={name}
             introduce={introduce}
           />
+        </ModalPortal>
+      )}
+
+      {isLogoutModal && (
+        <ModalPortal>
+          <CommonConfirm setIsConfirm={setIsLogoutModal} isText={"logout"} />
         </ModalPortal>
       )}
     </MainWrap>

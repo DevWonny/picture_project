@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CloseIcon from "../assets/CloseIcon.svg";
 
 import CommonSubmit from "../components/CommonSubmit";
+import CommonConfirm from "../components/CommonConfirm";
 
 import { UserDeleteAPI } from "../api/User";
 interface props {
