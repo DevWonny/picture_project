@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import MultipleImage from "../assets/MultipleImage.svg";
 import AddImage from "../assets/AddImage.svg";
 import Logout from "../assets/Logout.svg";
 
@@ -66,8 +65,8 @@ const Main = () => {
   };
 
   // detail page
-  const detailLink = (params: string, detailId: string) => {
-    navigate(`/detail/${params}`, { state: detailId });
+  const detailLink = (params: string, detailId: string, id: string) => {
+    navigate(`/detail/${params}`, { state: { detailId, id } });
   };
 
   // image GET useEffect
@@ -83,7 +82,7 @@ const Main = () => {
   return (
     <MainWrap>
       {/* 추후 변경 필요! */}
-      <h1>Project Name</h1>
+      <h1>An Unfinished Story</h1>
       <LogoutButton
         onClick={() => {
           logoutApi();
@@ -115,7 +114,7 @@ const Main = () => {
               <ImageDiv
                 key={`picture_project_main_key_${index}`}
                 onClick={() => {
-                  detailLink(el.key, el._id);
+                  detailLink(el.key, el._id, id);
                 }}
               >
                 <img
@@ -135,7 +134,8 @@ const Main = () => {
       {/* image add button */}
       <AddImageContainer
         onClick={() => {
-          navigate("/upload");
+          // upload 페이지의 Header부분에 ID를 출력하기 위해 state로 id 값 넘겨줌
+          navigate("/upload", { state: id });
         }}
       >
         <AddImageDiv>
@@ -259,18 +259,18 @@ const NoImageText = styled.p`
   color: #e2e2e0;
 `;
 
-const MultiImage = styled.div`
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
+// const MultiImage = styled.div`
+//   width: 15px;
+//   height: 15px;
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
 
-  & img {
-    width: 100%;
-    height: 100%;
-  }
-`;
+//   & img {
+//     width: 100%;
+//     height: 100%;
+//   }
+// `;
 
 const AddImageContainer = styled.div`
   width: 450px;

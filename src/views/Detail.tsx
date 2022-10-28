@@ -25,7 +25,7 @@ const Detail = () => {
     const sessionid = localStorage.getItem("sessionId");
     if (sessionid) {
       const res = await ImageDeleteAPI({
-        imageId: location.state,
+        imageId: location.state.detailId,
         sessionId: sessionid,
       });
 
@@ -37,7 +37,7 @@ const Detail = () => {
 
   // image detail get api
   const imageDetailGetApi = async () => {
-    const res = await ImageDetailGetAPI({ imageId: location.state });
+    const res = await ImageDetailGetAPI({ imageId: location.state.detailId });
 
     if (res) {
       setText(res.data.text);
@@ -55,7 +55,7 @@ const Detail = () => {
       <DetailHeader>
         <BackButton parameter={location.pathname} />
         <p>
-          ID
+          {location.state.id}
           <br />
           <span>게시물</span>
         </p>

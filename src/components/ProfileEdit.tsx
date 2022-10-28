@@ -32,9 +32,10 @@ const ProfileEdit = (props: props) => {
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
-    if (!!props.id && !!props.name) {
+    if (!!props.id && !!props.name && !!props.introduce) {
       setEditId(props.id);
       setEditName(props.name);
+      setEditIntroduce(props.introduce);
     }
   }, [props]);
 

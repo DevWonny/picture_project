@@ -7,7 +7,7 @@ const Intro = () => {
 
   return (
     <IntroWrap>
-      <p>앱 실행시 문구.... 뭐넣지....?</p>
+      <Title>An Unfinished Story</Title>
 
       <IntroButton sign={false} onClick={() => navigate("/login")}>
         Login
@@ -29,10 +29,12 @@ const IntroWrap = styled.div`
   margin: 0 auto;
   text-align: center;
   line-height: 100vh;
+`;
 
-  & p {
-    margin: 0;
-  }
+const Title = styled.p`
+  margin: 0;
+  font-size: 30px;
+  font-weight: 900;
 `;
 
 const IntroButton = styled.div<{ sign: boolean }>`

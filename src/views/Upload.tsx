@@ -33,6 +33,7 @@ const Upload = () => {
     };
   };
 
+  // image upload api
   const imageUploadApi = async () => {
     const sessionId = localStorage.getItem("sessionId");
 
@@ -62,7 +63,7 @@ const Upload = () => {
       <UploadHeader>
         <BackButton parameter={location.pathname} />
         <p>
-          ID
+          {location.state}
           <br />
           <span>Upload</span>
         </p>
@@ -186,6 +187,7 @@ const ImageSearchButton = styled.div`
   text-align: center;
   line-height: 30px;
   font-size: 14px;
+  color: #e2e2e0;
 
   & input {
     width: 100%;
@@ -215,6 +217,7 @@ const Preview = styled.div`
   & p {
     margin: 0;
     text-align: center;
+    color: #767971;
   }
 `;
 

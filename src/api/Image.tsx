@@ -60,7 +60,6 @@ export const ImageDetailGetAPI = async (props: ImageData) => {
 
 // image delete api
 export const ImageDeleteAPI = async (props: ImageData) => {
-  console.log("imageId", props.imageId);
   try {
     const res = await axios.delete(
       `http://localhost:5000/images/${props.imageId}`,
