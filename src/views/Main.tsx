@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import MultipleImage from "../assets/MultipleImage.svg";
 import AddImage from "../assets/AddImage.svg";
 import Logout from "../assets/Logout.svg";
 
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
+import CommonConfirm from "../components/CommonConfirm";
 
 import { UserFetch, LogoutAPI } from "../api/User";
 import { ImageGetAPI } from "../api/Image";
@@ -21,6 +21,7 @@ interface Profile {
 const Main = () => {
   // navigate
   const navigate = useNavigate();
+  // profile Modal state
   const [isModal, setIsModal] = useState(false);
   // id
   const [id, setId] = useState("");
@@ -30,6 +31,8 @@ const Main = () => {
   const [introduce, setIntroduce] = useState("");
   // image List
   const [imageList, setImageList] = useState<any[]>([]);
+  // logout Modal State
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
 
   // last Id
   const [lastId, setLastId] = useState("");
@@ -43,20 +46,6 @@ const Main = () => {
         setId(res.data.id);
         setName(res.data.name);
         setIntroduce(res.data.introduce);
-      }
-    }
-  };
-
-  // logout api 호출
-  const logoutApi = async () => {
-    const sessionId = localStorage.getItem("sessionId");
-    if (!!sessionId) {
-      const res = await LogoutAPI({ sessionId: sessionId });
-      if (res) {
-        alert("logOut!");
-        // logout 과 동시에 localStorage에서 session Id 제거
-        localStorage.removeItem("sessionId");
-        navigate("/");
       }
     }
   };
@@ -83,8 +72,8 @@ const Main = () => {
   }, [imageList]);
 
   // detail page
-  const detailLink = (params: string, detailId: string) => {
-    navigate(`/detail/${params}`, { state: detailId });
+  const detailLink = (params: string, detailId: string, id: string) => {
+    navigate(`/detail/${params}`, { state: { detailId, id } });
   };
 
   // image GET useEffect
@@ -101,14 +90,17 @@ const Main = () => {
   return (
     <MainWrap>
       {/* 추후 변경 필요! */}
-      <h1>Project Name</h1>
+      <h1>An Unfinished Story</h1>
+
+      {/* logout button */}
       <LogoutButton
         onClick={() => {
-          logoutApi();
+          setIsLogoutModal(true);
         }}
       >
         <img src={Logout} alt="logout_button" />
       </LogoutButton>
+
       {/* profile 영역 */}
       <ProfileContainer>
         <ProfileContent>
@@ -133,7 +125,7 @@ const Main = () => {
               <ImageDiv
                 key={`picture_project_main_key_${index}`}
                 onClick={() => {
-                  detailLink(el.key, el._id);
+                  detailLink(el.key, el._id, id);
                 }}
               >
                 <img
@@ -153,7 +145,8 @@ const Main = () => {
       {/* image add button */}
       <AddImageContainer
         onClick={() => {
-          navigate("/upload");
+          // upload 페이지의 Header부분에 ID를 출력하기 위해 state로 id 값 넘겨줌
+          navigate("/upload", { state: id });
         }}
       >
         <AddImageDiv>
@@ -170,6 +163,12 @@ const Main = () => {
             name={name}
             introduce={introduce}
           />
+        </ModalPortal>
+      )}
+
+      {isLogoutModal && (
+        <ModalPortal>
+          <CommonConfirm setIsConfirm={setIsLogoutModal} isText={"logout"} />
         </ModalPortal>
       )}
     </MainWrap>
@@ -277,18 +276,18 @@ const NoImageText = styled.p`
   color: #e2e2e0;
 `;
 
-const MultiImage = styled.div`
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 5px;
-  right: 5px;
+// const MultiImage = styled.div`
+//   width: 15px;
+//   height: 15px;
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
 
-  & img {
-    width: 100%;
-    height: 100%;
-  }
-`;
+//   & img {
+//     width: 100%;
+//     height: 100%;
+//   }
+// `;
 
 const AddImageContainer = styled.div`
   width: 450px;

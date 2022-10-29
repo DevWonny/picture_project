@@ -34,10 +34,15 @@ const SignUp = () => {
         <h1>Sign Up</h1>
 
         <CommonInput placeHolderText="ID" setFunction={setId} />
-        <CommonInput placeHolderText="PW" setFunction={setPassword} />
+        <CommonInput
+          placeHolderText="PW"
+          setFunction={setPassword}
+          type="password"
+        />
         <CommonInput
           placeHolderText="PW Check"
           setFunction={setPasswordCheck}
+          type="password"
         />
         <CommonInput placeHolderText="Name" setFunction={setName} />
         <CommonInput placeHolderText="Introduce" setFunction={setIntroduce} />

@@ -4,15 +4,16 @@ import styled from "styled-components";
 import DeleteIcon from "../assets/DeleteIcon.svg";
 
 import BackButton from "../components/BackButton";
-import { ImageDeleteAPI, ImageDetailGetAPI } from "../api/Image";
+import { ImageDetailGetAPI } from "../api/Image";
+
+import CommonConfirm from "../components/CommonConfirm";
+import ModalPortal from "../components/ModalPortal";
 
 const Detail = () => {
   // location
   const location = useLocation();
   // params
   const params = useParams();
-  // navigate
-  const navigate = useNavigate();
 
   // text state
   const [text, setText] = useState("");
@@ -20,24 +21,12 @@ const Detail = () => {
   // date
   const [date, setDate] = useState("");
 
-  // image delete api
-  const imageDeleteApi = async () => {
-    const sessionid = localStorage.getItem("sessionId");
-    if (sessionid) {
-      const res = await ImageDeleteAPI({
-        imageId: location.state,
-        sessionId: sessionid,
-      });
-
-      if (res) {
-        navigate("/main");
-      }
-    }
-  };
+  // image delete modal
+  const [isImageDelete, setIsImageDelete] = useState(false);
 
   // image detail get api
   const imageDetailGetApi = async () => {
-    const res = await ImageDetailGetAPI({ imageId: location.state });
+    const res = await ImageDetailGetAPI({ imageId: location.state.detailId });
 
     if (res) {
       setText(res.data.text);
@@ -55,7 +44,7 @@ const Detail = () => {
       <DetailHeader>
         <BackButton parameter={location.pathname} />
         <p>
-          ID
+          {location.state.id}
           <br />
           <span>게시물</span>
         </p>
@@ -66,7 +55,7 @@ const Detail = () => {
         <DetailContainerHeader>
           <DetailDeleteButton
             onClick={() => {
-              imageDeleteApi();
+              setIsImageDelete(true);
             }}
           >
             <img src={DeleteIcon} alt="delete_icon" />
@@ -86,6 +75,15 @@ const Detail = () => {
           <p>{text}</p>
         </DetailTextContainer>
       </DetailContainer>
+
+      {isImageDelete && (
+        <ModalPortal>
+          <CommonConfirm
+            detailId={location.state.detailId}
+            setIsConfirm={setIsImageDelete}
+          />
+        </ModalPortal>
+      )}
     </DetailWrap>
   );
 };
