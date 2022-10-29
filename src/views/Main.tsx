@@ -10,6 +10,7 @@ import ProfileEdit from "../components/ProfileEdit";
 
 import { UserFetch, LogoutAPI } from "../api/User";
 import { ImageGetAPI } from "../api/Image";
+import { lstat } from "fs/promises";
 
 interface Profile {
   isId?: boolean;
@@ -29,6 +30,9 @@ const Main = () => {
   const [introduce, setIntroduce] = useState("");
   // image List
   const [imageList, setImageList] = useState<any[]>([]);
+
+  // last Id
+  const [lastId, setLastId] = useState("");
 
   // user api 호출
   const userFetch = async () => {
@@ -59,11 +63,24 @@ const Main = () => {
 
   // image get api
   const imageGetApi = async () => {
-    const res = await ImageGetAPI();
-    if (res) {
-      setImageList(res.reverse());
+    if (lastId) {
+      const res = await ImageGetAPI({ lastId: lastId });
+
+      if (res) {
+        setImageList((prev) => [...prev, ...res]);
+      }
+    } else {
+      const res = await ImageGetAPI();
+      if (res) {
+        setLastId(res[res.length - 1]._id);
+        setImageList(res);
+      }
     }
   };
+
+  useEffect(() => {
+    console.log("imageList", imageList);
+  }, [imageList]);
 
   // detail page
   const detailLink = (params: string, detailId: string) => {
@@ -71,6 +88,7 @@ const Main = () => {
   };
 
   // image GET useEffect
+  // image list initialize
   useEffect(() => {
     imageGetApi();
   }, []);
@@ -129,7 +147,7 @@ const Main = () => {
           <NoImageText>첫 이미지를 올려주세요!</NoImageText>
         )}
 
-        {imageList.length > 0 && <TestDiv />}
+        {imageList.length > 0 && <ObserveDiv />}
       </ImageWrap>
 
       {/* image add button */}
@@ -296,7 +314,8 @@ const AddImageDiv = styled.div`
   }
 `;
 
-const TestDiv = styled.div`
+const ObserveDiv = styled.div`
   width: 100%;
   height: 100px;
+  background: red;
 `;

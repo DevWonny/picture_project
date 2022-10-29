@@ -5,6 +5,7 @@ interface ImageData {
   sessionId?: string;
   imageId?: string;
   imageText?: string;
+  lastId?: string;
 }
 // image upload api
 export const ImageUploadAPI = async (props: ImageData) => {
@@ -31,8 +32,19 @@ export const ImageUploadAPI = async (props: ImageData) => {
 };
 
 // image get api
-export const ImageGetAPI = async () => {
+export const ImageGetAPI = async (props?: ImageData) => {
   try {
+    // last id 를 입력한 경우
+    if (!!props && props.lastId) {
+      const res = await axios.get(
+        `http://localhost:5000/images?lastId=${props.lastId}`
+      );
+
+      if (res) {
+        return res.data;
+      }
+    }
+
     const res = await axios.get(`http://localhost:5000/images/`);
 
     if (res) {
