@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AddImage from "../assets/AddImage.svg";
@@ -8,9 +8,8 @@ import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
 import CommonConfirm from "../components/CommonConfirm";
 
-import { UserFetch, LogoutAPI } from "../api/User";
+import { UserFetch } from "../api/User";
 import { ImageGetAPI } from "../api/Image";
-import { lstat } from "fs/promises";
 
 interface Profile {
   isId?: boolean;
@@ -33,9 +32,12 @@ const Main = () => {
   const [imageList, setImageList] = useState<any[]>([]);
   // logout Modal State
   const [isLogoutModal, setIsLogoutModal] = useState(false);
-
   // last Id
   const [lastId, setLastId] = useState("");
+  // useRef - infinite scroll
+  const infiniteRef = useRef<HTMLDivElement>(null);
+  // pagination index
+  const [paginationIndex, setPaginationIndex] = useState(0);
 
   // user api 호출
   const userFetch = async () => {
@@ -55,7 +57,8 @@ const Main = () => {
     if (lastId) {
       const res = await ImageGetAPI({ lastId: lastId });
 
-      if (res) {
+      if (res.length > 0) {
+        setLastId(res[res.length - 1]._id);
         setImageList((prev) => [...prev, ...res]);
       }
     } else {
@@ -67,25 +70,45 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("imageList", imageList);
-  }, [imageList]);
-
   // detail page
   const detailLink = (params: string, detailId: string, id: string) => {
     navigate(`/detail/${params}`, { state: { detailId, id } });
   };
 
-  // image GET useEffect
-  // image list initialize
-  useEffect(() => {
-    imageGetApi();
-  }, []);
-
   // user data get useEffect
   useEffect(() => {
     userFetch();
   }, [isModal]);
+
+  // image GET useEffect
+  // image list initialize
+  useEffect(() => {
+    imageGetApi();
+  }, [paginationIndex]);
+
+  // observer
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+
+      setPaginationIndex(paginationIndex + 1);
+    }
+
+    observer.observe(entry.target);
+  };
+
+  useEffect(() => {
+    let observer: any;
+    if (infiniteRef.current) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+
+      observer.observe(infiniteRef.current);
+    }
+
+    return () => observer && observer.disconnect();
+  }, [onIntersect]);
 
   return (
     <MainWrap>
@@ -139,7 +162,7 @@ const Main = () => {
           <NoImageText>첫 이미지를 올려주세요!</NoImageText>
         )}
 
-        {imageList.length > 0 && <ObserveDiv />}
+        {imageList.length > 0 && <ObserveDiv ref={infiniteRef} />}
       </ImageWrap>
 
       {/* image add button */}
@@ -316,5 +339,4 @@ const AddImageDiv = styled.div`
 const ObserveDiv = styled.div`
   width: 100%;
   height: 100px;
-  background: red;
 `;
