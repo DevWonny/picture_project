@@ -70,6 +70,16 @@ const Main = () => {
     }
   };
 
+  // observer
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      setPaginationIndex(paginationIndex + 1);
+    }
+
+    observer.observe(entry.target);
+  };
+
   // detail page
   const detailLink = (params: string, detailId: string, id: string) => {
     navigate(`/detail/${params}`, { state: { detailId, id } });
@@ -86,22 +96,11 @@ const Main = () => {
     imageGetApi();
   }, [paginationIndex]);
 
-  // observer
-  const onIntersect = async ([entry]: any, observer: any) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
-
-      setPaginationIndex(paginationIndex + 1);
-    }
-
-    observer.observe(entry.target);
-  };
-
   useEffect(() => {
     let observer: any;
     if (infiniteRef.current) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
+        threshold: 0.5,
       });
 
       observer.observe(infiniteRef.current);
@@ -161,7 +160,6 @@ const Main = () => {
         ) : (
           <NoImageText>첫 이미지를 올려주세요!</NoImageText>
         )}
-
         {imageList.length > 0 && <ObserveDiv ref={infiniteRef} />}
       </ImageWrap>
 
@@ -339,4 +337,5 @@ const AddImageDiv = styled.div`
 const ObserveDiv = styled.div`
   width: 100%;
   height: 100px;
+  margin-top: 50px;
 `;
