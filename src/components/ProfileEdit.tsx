@@ -34,8 +34,10 @@ const ProfileEdit = (props: props) => {
   // 회원탈퇴 state
   const [isWithdrawal, setIsWithdrawal] = useState(false);
 
-  // loading state
+  // 탈퇴 loading state
   const [isLoading, setIsLoading] = useState(false);
+  // 정보수정 loading state
+  const [isEditLoading, setIsEditLoading] = useState(false);
 
   useEffect(() => {
     if (!!props.id && !!props.name && !!props.introduce) {
@@ -92,6 +94,7 @@ const ProfileEdit = (props: props) => {
           name={editName}
           introduce={editIntroduce}
           setIsModal={props.setIsModal}
+          setIsEditLoading={setIsEditLoading}
         />
 
         <DeleteButton>
@@ -116,6 +119,7 @@ const ProfileEdit = (props: props) => {
       )}
 
       {isLoading && <Loading loadingText="회원탈퇴" />}
+      {isEditLoading && <Loading loadingText="회원 정보 변경" />}
     </>
   );
 };

@@ -13,6 +13,7 @@ interface submitType {
   introduce?: string;
   setIsModal?: Dispatch<SetStateAction<boolean>>;
   setIsLoading?: Dispatch<SetStateAction<boolean>>;
+  setIsEditLoading?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommonSubmit = (props: submitType) => {
@@ -147,6 +148,10 @@ const CommonSubmit = (props: submitType) => {
   const userEditClick = async () => {
     const sessionId = localStorage.getItem("sessionId");
 
+    if (props.setIsEditLoading) {
+      props.setIsEditLoading(true);
+    }
+
     if (!!sessionId) {
       const res = await UserEdit({
         sessionId: sessionId,
@@ -154,6 +159,9 @@ const CommonSubmit = (props: submitType) => {
         introduce: props.introduce,
       });
       if (res) {
+        if (props.setIsEditLoading) {
+          props.setIsEditLoading(false);
+        }
         if (props.setIsModal) props.setIsModal(false);
       }
     }
