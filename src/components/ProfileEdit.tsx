@@ -7,6 +7,8 @@ import CommonSubmit from "../components/CommonSubmit";
 import CommonConfirm from "../components/CommonConfirm";
 
 import ModalPortal from "./ModalPortal";
+
+import Loading from "./Loading";
 interface props {
   isModal: boolean;
   setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -17,9 +19,6 @@ interface props {
 }
 
 const ProfileEdit = (props: props) => {
-  // navigate
-  const navigate = useNavigate();
-
   // edit Id
   const [editId, setEditId] = useState("");
 
@@ -34,6 +33,9 @@ const ProfileEdit = (props: props) => {
 
   // 회원탈퇴 state
   const [isWithdrawal, setIsWithdrawal] = useState(false);
+
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!!props.id && !!props.name && !!props.introduce) {
@@ -105,9 +107,15 @@ const ProfileEdit = (props: props) => {
 
       {isWithdrawal && (
         <ModalPortal>
-          <CommonConfirm setIsConfirm={setIsWithdrawal} isText={"withdrawal"} />
+          <CommonConfirm
+            setIsConfirm={setIsWithdrawal}
+            isText={"withdrawal"}
+            setIsLoading={setIsLoading}
+          />
         </ModalPortal>
       )}
+
+      {isLoading && <Loading loadingText="회원탈퇴" />}
     </>
   );
 };

@@ -7,6 +7,7 @@ import Logout from "../assets/Logout.svg";
 import ModalPortal from "../components/ModalPortal";
 import ProfileEdit from "../components/ProfileEdit";
 import CommonConfirm from "../components/CommonConfirm";
+import Loading from "../components/Loading";
 
 import { UserFetch } from "../api/User";
 import { ImageGetAPI } from "../api/Image";
@@ -38,6 +39,8 @@ const Main = () => {
   const infiniteRef = useRef<HTMLDivElement>(null);
   // pagination index
   const [paginationIndex, setPaginationIndex] = useState(0);
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   // user api 호출
   const userFetch = async () => {
@@ -110,89 +113,97 @@ const Main = () => {
   }, [onIntersect]);
 
   return (
-    <MainWrap>
-      {/* 추후 변경 필요! */}
-      <h1>An Unfinished Story</h1>
+    <>
+      <MainWrap>
+        {/* 추후 변경 필요! */}
+        <h1>An Unfinished Story</h1>
 
-      {/* logout button */}
-      <LogoutButton
-        onClick={() => {
-          setIsLogoutModal(true);
-        }}
-      >
-        <img src={Logout} alt="logout_button" />
-      </LogoutButton>
+        {/* logout button */}
+        <LogoutButton
+          onClick={() => {
+            setIsLogoutModal(true);
+          }}
+        >
+          <img src={Logout} alt="logout_button" />
+        </LogoutButton>
 
-      {/* profile 영역 */}
-      <ProfileContainer>
-        <ProfileContent>
-          <ProfileText isId={true}>{id}</ProfileText>
-          <ProfileText>{name}</ProfileText>
-          <ProfileText isIntroduce={true}>{introduce}</ProfileText>
-          <ProfileText
-            isEdit={true}
-            onClick={() => {
-              setIsModal(true);
-            }}
-          >
-            프로필 편집
-          </ProfileText>
-        </ProfileContent>
-      </ProfileContainer>
-      {/* image 영역 */}
-      <ImageWrap isImage={imageList.length > 0}>
-        {imageList.length > 0 ? (
-          imageList.map((el, index) => {
-            return (
-              <ImageDiv
-                key={`picture_project_main_key_${index}`}
-                onClick={() => {
-                  detailLink(el.key, el._id, id);
-                }}
-              >
-                <img
-                  src={`http://localhost:5000/uploads/${el.key}`}
-                  alt="main_image"
-                />
-              </ImageDiv>
-            );
-          })
-        ) : (
-          <NoImageText>첫 이미지를 올려주세요!</NoImageText>
+        {/* profile 영역 */}
+        <ProfileContainer>
+          <ProfileContent>
+            <ProfileText isId={true}>{id}</ProfileText>
+            <ProfileText>{name}</ProfileText>
+            <ProfileText isIntroduce={true}>{introduce}</ProfileText>
+            <ProfileText
+              isEdit={true}
+              onClick={() => {
+                setIsModal(true);
+              }}
+            >
+              프로필 편집
+            </ProfileText>
+          </ProfileContent>
+        </ProfileContainer>
+        {/* image 영역 */}
+        <ImageWrap isImage={imageList.length > 0}>
+          {imageList.length > 0 ? (
+            imageList.map((el, index) => {
+              return (
+                <ImageDiv
+                  key={`picture_project_main_key_${index}`}
+                  onClick={() => {
+                    detailLink(el.key, el._id, id);
+                  }}
+                >
+                  <img
+                    src={`http://localhost:5000/uploads/${el.key}`}
+                    alt="main_image"
+                  />
+                </ImageDiv>
+              );
+            })
+          ) : (
+            <NoImageText>첫 이미지를 올려주세요!</NoImageText>
+          )}
+          {imageList.length > 0 && <ObserveDiv ref={infiniteRef} />}
+        </ImageWrap>
+
+        {/* image add button */}
+        <AddImageContainer
+          onClick={() => {
+            // upload 페이지의 Header부분에 ID를 출력하기 위해 state로 id 값 넘겨줌
+            navigate("/upload", { state: id });
+          }}
+        >
+          <AddImageDiv>
+            <img src={AddImage} alt="add_image" />
+          </AddImageDiv>
+        </AddImageContainer>
+
+        {isModal && (
+          <ModalPortal>
+            <ProfileEdit
+              isModal={isModal}
+              setIsModal={setIsModal}
+              id={id}
+              name={name}
+              introduce={introduce}
+            />
+          </ModalPortal>
         )}
-        {imageList.length > 0 && <ObserveDiv ref={infiniteRef} />}
-      </ImageWrap>
 
-      {/* image add button */}
-      <AddImageContainer
-        onClick={() => {
-          // upload 페이지의 Header부분에 ID를 출력하기 위해 state로 id 값 넘겨줌
-          navigate("/upload", { state: id });
-        }}
-      >
-        <AddImageDiv>
-          <img src={AddImage} alt="add_image" />
-        </AddImageDiv>
-      </AddImageContainer>
+        {isLogoutModal && (
+          <ModalPortal>
+            <CommonConfirm
+              setIsConfirm={setIsLogoutModal}
+              isText={"logout"}
+              setIsLoading={setIsLoading}
+            />
+          </ModalPortal>
+        )}
+      </MainWrap>
 
-      {isModal && (
-        <ModalPortal>
-          <ProfileEdit
-            isModal={isModal}
-            setIsModal={setIsModal}
-            id={id}
-            name={name}
-            introduce={introduce}
-          />
-        </ModalPortal>
-      )}
-
-      {isLogoutModal && (
-        <ModalPortal>
-          <CommonConfirm setIsConfirm={setIsLogoutModal} isText={"logout"} />
-        </ModalPortal>
-      )}
-    </MainWrap>
+      {isLoading && <Loading loadingText="로그아웃" />}
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ interface confirmData {
   setIsConfirm?: Dispatch<SetStateAction<boolean>>;
   isText?: string;
   detailId?: string;
+  setIsLoading?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommonConfirm = (props: confirmData) => {
@@ -17,11 +18,17 @@ const CommonConfirm = (props: confirmData) => {
 
   // logout api 호출
   const logoutApi = async () => {
+    if (props.setIsLoading) {
+      props.setIsLoading(true);
+    }
     const sessionId = localStorage.getItem("sessionId");
     if (!!sessionId) {
       const res = await LogoutAPI({ sessionId: sessionId });
       if (res) {
         // logout 과 동시에 localStorage에서 session Id 제거
+        if (props.setIsLoading) {
+          props.setIsLoading(false);
+        }
         localStorage.removeItem("sessionId");
         navigate("/");
       }
@@ -30,11 +37,18 @@ const CommonConfirm = (props: confirmData) => {
 
   // 회원탈퇴 api 호출
   const userDeleteApi = async () => {
+    if (props.setIsLoading) {
+      props.setIsLoading(true);
+    }
+
     const sessionId = localStorage.getItem("sessionId");
     if (sessionId) {
       const res = await UserDeleteAPI({ sessionId });
 
       if (res) {
+        if (props.setIsLoading) {
+          props.setIsLoading(false);
+        }
         localStorage.removeItem("sessionId");
         navigate("/");
       }
@@ -44,6 +58,10 @@ const CommonConfirm = (props: confirmData) => {
   // image delete api
   const imageDeleteApi = async () => {
     const sessionid = localStorage.getItem("sessionId");
+
+    if (props.setIsLoading) {
+      props.setIsLoading(true);
+    }
     if (sessionid) {
       const res = await ImageDeleteAPI({
         imageId: props.detailId,
@@ -51,6 +69,9 @@ const CommonConfirm = (props: confirmData) => {
       });
 
       if (res) {
+        if (props.setIsLoading) {
+          props.setIsLoading(true);
+        }
         navigate("/main");
       }
     }

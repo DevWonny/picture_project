@@ -120,6 +120,11 @@ const CommonSubmit = (props: submitType) => {
     if (!onRegisterValidation()) {
       return;
     }
+
+    if (props.setIsLoading) {
+      props.setIsLoading(true);
+    }
+
     if (!!props.id && !!props.password && !!props.name && !!props.introduce) {
       const res = await RegisterAPI({
         userId: props.id,
@@ -129,6 +134,9 @@ const CommonSubmit = (props: submitType) => {
       });
 
       if (res) {
+        if (props.setIsLoading) {
+          props.setIsLoading(false);
+        }
         localStorage.setItem("sessionId", res.data.sessionId);
         navigate("/main");
       }

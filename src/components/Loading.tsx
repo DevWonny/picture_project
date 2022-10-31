@@ -41,6 +41,7 @@ const LoadingWrap = styled.div`
   position: absolute;
   top: 0;
   left: calc(50% - 225px);
+  z-index: 9;
   display: flex;
   align-items: center;
   justify-content: center;

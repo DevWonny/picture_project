@@ -4,6 +4,8 @@ import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
+import Loading from "../components/Loading";
+
 const SignUp = () => {
   // id state
   const [id, setId] = useState("");
@@ -17,6 +19,8 @@ const SignUp = () => {
   const [introduce, setIntroduce] = useState("");
   // sign up state
   const [isSignUp, setIsSignUp] = useState(false);
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   // sign up button background 변경
   useEffect(() => {
@@ -28,35 +32,39 @@ const SignUp = () => {
   }, [id, password, passwordCheck, name, introduce]);
 
   return (
-    <SignUpWrap>
-      <BackButton />
-      <SignUpContainer>
-        <h1>Sign Up</h1>
+    <>
+      <SignUpWrap>
+        <BackButton />
+        <SignUpContainer>
+          <h1>Sign Up</h1>
 
-        <CommonInput placeHolderText="ID" setFunction={setId} />
-        <CommonInput
-          placeHolderText="PW"
-          setFunction={setPassword}
-          type="password"
-        />
-        <CommonInput
-          placeHolderText="PW Check"
-          setFunction={setPasswordCheck}
-          type="password"
-        />
-        <CommonInput placeHolderText="Name" setFunction={setName} />
-        <CommonInput placeHolderText="Introduce" setFunction={setIntroduce} />
-        <CommonSubmit
-          submitText="Sign Up"
-          isState={isSignUp}
-          id={id}
-          password={password}
-          passwordCheck={passwordCheck}
-          name={name}
-          introduce={introduce}
-        />
-      </SignUpContainer>
-    </SignUpWrap>
+          <CommonInput placeHolderText="ID" setFunction={setId} />
+          <CommonInput
+            placeHolderText="PW"
+            setFunction={setPassword}
+            type="password"
+          />
+          <CommonInput
+            placeHolderText="PW Check"
+            setFunction={setPasswordCheck}
+            type="password"
+          />
+          <CommonInput placeHolderText="Name" setFunction={setName} />
+          <CommonInput placeHolderText="Introduce" setFunction={setIntroduce} />
+          <CommonSubmit
+            submitText="Sign Up"
+            isState={isSignUp}
+            id={id}
+            password={password}
+            passwordCheck={passwordCheck}
+            name={name}
+            introduce={introduce}
+            setIsLoading={setIsLoading}
+          />
+        </SignUpContainer>
+      </SignUpWrap>
+      {isLoading && <Loading loadingText="Sign Up" />}
+    </>
   );
 };
 
