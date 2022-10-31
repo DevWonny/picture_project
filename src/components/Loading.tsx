@@ -38,7 +38,9 @@ const LoadingWrap = styled.div`
   height: 900px;
   background: #8b7c67;
   margin: 0 auto;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 225px);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -5,6 +5,8 @@ import BackButton from "../components/BackButton";
 import CommonInput from "../components/CommonInput";
 import CommonSubmit from "../components/CommonSubmit";
 
+import Loading from "../components/Loading";
+
 const Login = () => {
   // navigate
   const navigate = useNavigate();
@@ -18,6 +20,9 @@ const Login = () => {
   // login submit button activate
   const [isSubmit, setIsSubmit] = useState(false);
 
+  // login state
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (!!id && !!password) {
       setIsSubmit(true);
@@ -27,26 +32,30 @@ const Login = () => {
   }, [id, password]);
 
   return (
-    <LoginWrap>
-      <BackButton />
-      <LoginContainer>
-        <h1>Login</h1>
+    <>
+      <LoginWrap>
+        <BackButton />
+        <LoginContainer>
+          <h1>Login</h1>
 
-        <CommonInput placeHolderText="ID" setFunction={setId} />
-        <CommonInput
-          placeHolderText="PW"
-          setFunction={setPassword}
-          type="password"
-        />
-        <CommonSubmit
-          submitText="Login"
-          isState={isSubmit}
-          id={id}
-          password={password}
-        />
-        <span onClick={() => navigate("/signup")}>Sign Up</span>
-      </LoginContainer>
-    </LoginWrap>
+          <CommonInput placeHolderText="ID" setFunction={setId} />
+          <CommonInput
+            placeHolderText="PW"
+            setFunction={setPassword}
+            type="password"
+          />
+          <CommonSubmit
+            submitText="Login"
+            isState={isSubmit}
+            id={id}
+            password={password}
+            setIsLoading={setIsLoading}
+          />
+          <span onClick={() => navigate("/signup")}>Sign Up</span>
+        </LoginContainer>
+      </LoginWrap>
+      {isLoading && <Loading loadingText="Login" />}
+    </>
   );
 };
 

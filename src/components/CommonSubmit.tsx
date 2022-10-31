@@ -1,9 +1,7 @@
 import { SetStateAction, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { LoginAPI, RegisterAPI } from "../api/User";
-
-import { UserEdit } from "../api/User";
+import { LoginAPI, RegisterAPI, UserEdit } from "../api/User";
 
 interface submitType {
   submitText: string;
@@ -14,6 +12,7 @@ interface submitType {
   name?: string;
   introduce?: string;
   setIsModal?: Dispatch<SetStateAction<boolean>>;
+  setIsLoading?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommonSubmit = (props: submitType) => {
@@ -94,6 +93,11 @@ const CommonSubmit = (props: submitType) => {
     if (!onLoginValidation()) {
       return;
     }
+
+    if (props.setIsLoading) {
+      props.setIsLoading(true);
+    }
+
     if (!!props.id && !!props.password) {
       const res = await LoginAPI({
         userId: props.id,
@@ -101,6 +105,9 @@ const CommonSubmit = (props: submitType) => {
       });
 
       if (res) {
+        if (props.setIsLoading) {
+          props.setIsLoading(false);
+        }
         localStorage.setItem("sessionId", res.data.sessionId);
         navigate("/main");
       }
