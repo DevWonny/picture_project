@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BackButton from "../components/BackButton";
 import AddImage from "../assets/AddImage.svg";
+import Loading from "../components/Loading";
 
 import { ImageUploadAPI } from "../api/Image";
 
@@ -22,6 +23,9 @@ const Upload = () => {
   // image Text
   const [imageText, setImageText] = useState("");
 
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   // image
   const imageDrop = (e: any) => {
     setFile(e.target.files[0]);
@@ -37,6 +41,10 @@ const Upload = () => {
   const imageUploadApi = async () => {
     const sessionId = localStorage.getItem("sessionId");
 
+    if (!isLoading) {
+      setIsLoading(true);
+    }
+
     if (!!sessionId && !!file) {
       const res = await ImageUploadAPI({
         sessionId: sessionId,
@@ -45,6 +53,7 @@ const Upload = () => {
       });
 
       if (res) {
+        setIsLoading(false);
         navigate("/main");
       }
     }
@@ -59,53 +68,56 @@ const Upload = () => {
   }, [imageText]);
 
   return (
-    <UploadWrap>
-      <UploadHeader>
-        <BackButton parameter={location.pathname} />
-        <p>
-          {location.state}
-          <br />
-          <span>Upload</span>
-        </p>
-      </UploadHeader>
-      <UploadContentWrap>
-        {/* image upload */}
-        <UploadContentContainer>
-          <Preview>
-            {imageSrc ? (
-              <img src={imageSrc} alt="image_test" />
-            ) : (
-              <p>오늘 하루를 표현할 사진을 올려주세요!</p>
-            )}
-          </Preview>
-          <ImageSearchButton>
-            <input
-              type="file"
-              onChange={(e) => {
-                imageDrop(e);
-              }}
-            />
-            이미지 찾기
-          </ImageSearchButton>
-        </UploadContentContainer>
+    <>
+      <UploadWrap>
+        <UploadHeader>
+          <BackButton parameter={location.pathname} />
+          <p>
+            {location.state}
+            <br />
+            <span>Upload</span>
+          </p>
+        </UploadHeader>
+        <UploadContentWrap>
+          {/* image upload */}
+          <UploadContentContainer>
+            <Preview>
+              {imageSrc ? (
+                <img src={imageSrc} alt="image_test" />
+              ) : (
+                <p>오늘 하루를 표현할 사진을 올려주세요!</p>
+              )}
+            </Preview>
+            <ImageSearchButton>
+              <input
+                type="file"
+                onChange={(e) => {
+                  imageDrop(e);
+                }}
+              />
+              이미지 찾기
+            </ImageSearchButton>
+          </UploadContentContainer>
 
-        {/* text upload */}
-        <TextWrap
-          placeholder="오늘 하루를 남겨보세요!(300자 이내)"
-          value={imageText}
-          onChange={(e) => {
-            setImageText(e.target.value);
-          }}
-        />
-        <UploadButton
-          onClick={() => {
-            imageUploadApi();
-          }}
-        >
-          <img src={AddImage} alt="add_image" />
-        </UploadButton>
-      </UploadContentWrap>
-    </UploadWrap>
+          {/* text upload */}
+          <TextWrap
+            placeholder="오늘 하루를 남겨보세요!(300자 이내)"
+            value={imageText}
+            onChange={(e) => {
+              setImageText(e.target.value);
+            }}
+          />
+          <UploadButton
+            onClick={() => {
+              imageUploadApi();
+            }}
+          >
+            <img src={AddImage} alt="add_image" />
+          </UploadButton>
+        </UploadContentWrap>
+      </UploadWrap>
+      {isLoading && <Loading loadingText="Upload" />}
+    </>
   );
 };
 

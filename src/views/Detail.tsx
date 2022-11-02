@@ -4,10 +4,11 @@ import styled from "styled-components";
 import DeleteIcon from "../assets/DeleteIcon.svg";
 
 import BackButton from "../components/BackButton";
-import { ImageDetailGetAPI } from "../api/Image";
-
 import CommonConfirm from "../components/CommonConfirm";
 import ModalPortal from "../components/ModalPortal";
+import Loading from "../components/Loading";
+
+import { ImageDetailGetAPI } from "../api/Image";
 
 const Detail = () => {
   // location
@@ -24,13 +25,20 @@ const Detail = () => {
   // image delete modal
   const [isImageDelete, setIsImageDelete] = useState(false);
 
+  // loading state
+  const [isLoading, setIsLoading] = useState(false);
+
   // image detail get api
   const imageDetailGetApi = async () => {
+    if (!isLoading) {
+      setIsLoading(true);
+    }
     const res = await ImageDetailGetAPI({ imageId: location.state.detailId });
 
     if (res) {
       setText(res.data.text);
       setDate(res.data.createdAt);
+      setIsLoading(false);
     }
   };
 
@@ -39,52 +47,55 @@ const Detail = () => {
   }, []);
 
   return (
-    <DetailWrap>
-      {/* Header */}
-      <DetailHeader>
-        <BackButton parameter={location.pathname} />
-        <p>
-          {location.state.id}
-          <br />
-          <span>게시물</span>
-        </p>
-      </DetailHeader>
+    <>
+      <DetailWrap>
+        {/* Header */}
+        <DetailHeader>
+          <BackButton parameter={location.pathname} />
+          <p>
+            {location.state.id}
+            <br />
+            <span>게시물</span>
+          </p>
+        </DetailHeader>
 
-      {/* Detail Contents */}
-      <DetailContainer>
-        <DetailContainerHeader>
-          <DetailDeleteButton
-            onClick={() => {
-              setIsImageDelete(true);
-            }}
-          >
-            <img src={DeleteIcon} alt="delete_icon" />
-          </DetailDeleteButton>
-        </DetailContainerHeader>
-        {/* 이미지 영역 */}
-        <DetailImageContainer>
-          <img
-            src={`http://localhost:5000/uploads/${params.image}`}
-            alt="detail_image"
-          />
-        </DetailImageContainer>
+        {/* Detail Contents */}
+        <DetailContainer>
+          <DetailContainerHeader>
+            <DetailDeleteButton
+              onClick={() => {
+                setIsImageDelete(true);
+              }}
+            >
+              <img src={DeleteIcon} alt="delete_icon" />
+            </DetailDeleteButton>
+          </DetailContainerHeader>
+          {/* 이미지 영역 */}
+          <DetailImageContainer>
+            <img
+              src={`http://localhost:5000/uploads/${params.image}`}
+              alt="detail_image"
+            />
+          </DetailImageContainer>
 
-        <DateContainer>{date.split("T")[0]}</DateContainer>
-        {/* text 영역 */}
-        <DetailTextContainer>
-          <p>{text}</p>
-        </DetailTextContainer>
-      </DetailContainer>
+          <DateContainer>{date.split("T")[0]}</DateContainer>
+          {/* text 영역 */}
+          <DetailTextContainer>
+            <p>{text}</p>
+          </DetailTextContainer>
+        </DetailContainer>
 
-      {isImageDelete && (
-        <ModalPortal>
-          <CommonConfirm
-            detailId={location.state.detailId}
-            setIsConfirm={setIsImageDelete}
-          />
-        </ModalPortal>
-      )}
-    </DetailWrap>
+        {isImageDelete && (
+          <ModalPortal>
+            <CommonConfirm
+              detailId={location.state.detailId}
+              setIsConfirm={setIsImageDelete}
+            />
+          </ModalPortal>
+        )}
+      </DetailWrap>
+      {isLoading && <Loading loadingText="detail data get" />}
+    </>
   );
 };
 
