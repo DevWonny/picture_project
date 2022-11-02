@@ -41,34 +41,49 @@ const Main = () => {
   const [paginationIndex, setPaginationIndex] = useState(0);
   // loading state
   const [isLoading, setIsLoading] = useState(false);
+  // image Loading state
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  // user loading state
+  const [isUserLoading, setIsUserLoading] = useState(false);
 
   // user api 호출
   const userFetch = async () => {
     const sessionId = localStorage.getItem("sessionId");
+    if (!isUserLoading) {
+      setIsUserLoading(true);
+    }
+
     if (!!sessionId) {
       const res = await UserFetch({ sessionId: sessionId });
       if (res) {
         setId(res.data.id);
         setName(res.data.name);
         setIntroduce(res.data.introduce);
+        setIsUserLoading(false);
       }
     }
   };
 
   // image get api
   const imageGetApi = async () => {
+    if (!isImageLoading) {
+      setIsImageLoading(true);
+    }
+
     if (lastId) {
       const res = await ImageGetAPI({ lastId: lastId });
 
       if (res.length > 0) {
         setLastId(res[res.length - 1]._id);
         setImageList((prev) => [...prev, ...res]);
+        setIsImageLoading(false);
       }
     } else {
       const res = await ImageGetAPI();
       if (res) {
         setLastId(res[res.length - 1]._id);
         setImageList(res);
+        setIsImageLoading(false);
       }
     }
   };
@@ -202,7 +217,9 @@ const Main = () => {
         )}
       </MainWrap>
 
-      {isLoading && <Loading loadingText="로그아웃" />}
+      {isLoading && <Loading loadingText="logout" />}
+      {isImageLoading && <Loading loadingText="image loading" />}
+      {isUserLoading && <Loading loadingText="user data get" />}
     </>
   );
 };
