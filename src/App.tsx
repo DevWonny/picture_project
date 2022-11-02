@@ -8,10 +8,6 @@ import Main from "./views/Main";
 import Detail from "./views/Detail";
 import Upload from "./views/Upload";
 
-// 임시
-// 추후 제거 예정
-import Loading from "./components/Loading";
-
 function App() {
   return (
     <Routes>
@@ -21,7 +17,6 @@ function App() {
       <Route path="/main" element={<Main />} />
       <Route path="/detail/:image" element={<Detail />} />
       <Route path="/upload" element={<Upload />} />
-      <Route path="/loading" element={<Loading loadingText="test" />} />
     </Routes>
   );
 }
