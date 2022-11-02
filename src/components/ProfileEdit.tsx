@@ -118,8 +118,8 @@ const ProfileEdit = (props: props) => {
         </ModalPortal>
       )}
 
-      {isLoading && <Loading loadingText="회원탈퇴" />}
-      {isEditLoading && <Loading loadingText="회원 정보 변경" />}
+      {isLoading && <Loading loadingText="회원 탈퇴 진행 중..." />}
+      {isEditLoading && <Loading loadingText="회원 정보 변경 중..." />}
     </>
   );
 };

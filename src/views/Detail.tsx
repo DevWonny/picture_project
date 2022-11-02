@@ -94,7 +94,7 @@ const Detail = () => {
           </ModalPortal>
         )}
       </DetailWrap>
-      {isLoading && <Loading loadingText="detail data get" />}
+      {isLoading && <Loading loadingText="이미지 정보 가져오는 중..." />}
     </>
   );
 };

@@ -217,9 +217,9 @@ const Main = () => {
         )}
       </MainWrap>
 
-      {isLoading && <Loading loadingText="logout" />}
-      {isImageLoading && <Loading loadingText="image loading" />}
-      {isUserLoading && <Loading loadingText="user data get" />}
+      {isLoading && <Loading loadingText="로그아웃 진행 중..." />}
+      {isImageLoading && <Loading loadingText="이미지 가져오는 중..." />}
+      {isUserLoading && <Loading loadingText="유저 정보 가져오는 중..." />}
     </>
   );
 };

@@ -63,7 +63,7 @@ const SignUp = () => {
           />
         </SignUpContainer>
       </SignUpWrap>
-      {isLoading && <Loading loadingText="Sign Up" />}
+      {isLoading && <Loading loadingText="회원가입 진행 중..." />}
     </>
   );
 };

@@ -116,7 +116,7 @@ const Upload = () => {
           </UploadButton>
         </UploadContentWrap>
       </UploadWrap>
-      {isLoading && <Loading loadingText="Upload" />}
+      {isLoading && <Loading loadingText="이미지 업로드 진행 중..." />}
     </>
   );
 };

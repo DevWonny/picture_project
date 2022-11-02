@@ -54,7 +54,7 @@ const Login = () => {
           <span onClick={() => navigate("/signup")}>Sign Up</span>
         </LoginContainer>
       </LoginWrap>
-      {isLoading && <Loading loadingText="Login" />}
+      {isLoading && <Loading loadingText="로그인 진행 중..." />}
     </>
   );
 };
